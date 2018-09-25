@@ -6,7 +6,7 @@ environment:
   GOPATH: c:\gopath
 
 build_script:
-- cmd: go build -i
+- cmd: go install -i
 
 test_script:
 - cmd: go test ./... -v -race -coverprofile=coverage.txt -covermode=atomic -timeout 0
