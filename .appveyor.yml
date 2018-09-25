@@ -1,12 +1,10 @@
 version: 1.0.{build}
 
-clone_folder: c:\gopath\src\github.com\scientificgo\special
-
 environment:
   GOPATH: c:\gopath
 
-build_script:
-- cmd: go install -i
+install_script:
+- cmd: go get -t -v ./...
 
 test_script:
 - cmd: go test ./... -v -race -coverprofile=coverage.txt -covermode=atomic -timeout 0
