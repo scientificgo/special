@@ -3,7 +3,7 @@ version: 1.0.{build}
 environment:
   GOPATH: c:\gopath
 
-install_script:
+install:
 - cmd: go get -t -v ./...
 
 test_script:
