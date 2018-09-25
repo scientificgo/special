@@ -19,7 +19,7 @@
 package special
 
 import (
-	"github.com/scientificgo/scigo/utils"
+	"github.com/scientificgo/utils"
 	"math"
 )
 
