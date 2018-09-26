@@ -399,7 +399,7 @@ func LaguerreAL(n int, a, x float64) float64 {
 // HermiteH returns the nth unnormalised, or physics, Hermite polynomial, which is
 // related to the normalised Hermite polynomial by
 //
-//	H(n, x) = √2**n He(n, x√2)
+//  H(n, x) = √2**n He(n, x√2)
 //
 // where He is the normalised Hermite polynomial.
 //
@@ -411,7 +411,7 @@ func HermiteH(n int, x float64) float64 {
 // HermiteHe returns the nth normalised Hermite polynomial, which is
 // related to the "physics" Hermite polynomial by
 //
-//	H(n, x) = √2**n He(n, x√2)
+//  H(n, x) = √2**n He(n, x√2)
 //
 // where H is the unnormalised, or physics, Hermite polynomial.
 //

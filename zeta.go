@@ -7,9 +7,9 @@ package special
 import "math"
 
 // Zeta returns the Riemann zeta function, defined by
-//		  ∞
-//	Zeta(x) = ∑ 1 / n**x
-//		 n=1
+//            ∞
+//  Zeta(x) = ∑ 1 / n**x
+//           n=1
 //
 // although it has many other equivalent definitions.
 // This definition is valud for x > 1, however the Zeta function
@@ -302,9 +302,9 @@ func zetalaurent(x float64) float64 {
 
 // Eta returns the Dirichlet eta function, defined by
 //
-//		 ∞
-//	Eta(x) = ∑ (-1)**(n+1) / n**x = (1 - 2**(1-x)) Zeta(x)
-//		n=1
+//           ∞
+//  Eta(x) = ∑ (-1)**(n+1) / n**x = (1 - 2**(1-x)) Zeta(x)
+//          n=1
 //
 // where Zeta is the Riemann zeta function.
 //

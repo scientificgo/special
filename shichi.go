@@ -22,7 +22,6 @@ func Shi(x float64) float64 {
 	}
 
 	if x < 35 {
-
 		z := x * x
 		a := 1.0
 		s := 1.0
