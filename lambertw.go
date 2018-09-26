@@ -13,11 +13,11 @@ import "math"
 // LambertW returns the real branches of the
 // Lambert W function, implicitly defined by
 //
-//	W(x) Exp(W(x)) = x
+//  W(x) Exp(W(x)) = x
 //
 // or, equivalently, as the inverse of the function
 //
-//	f(x) = x Exp(x)
+//  f(x) = x Exp(x)
 //
 // where Exp is the exponential function. The principal branch (k=0) is defined on
 // x ≥ -1/e and the secondary branch (k=-1) is defined over -1/e ≤ x < 0.

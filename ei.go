@@ -8,9 +8,9 @@ import "math"
 
 // Ei returns the exponential integral of x, defined by
 //
-//		x
-//	Ei(x) = ∫ dt Exp(t) / t
-//	       t=-∞
+//          x
+//  Ei(x) = ∫ dt Exp(t) / t
+//         t=-∞
 //
 // See http://mathworld.wolfram.com/ExponentialIntegral.html for more information.
 func Ei(x float64) float64 {
@@ -139,9 +139,9 @@ func eiseries(x, xabs float64) float64 {
 }
 
 // Li returns the logarithmic integral of x, defined for x ≥ 0 by
-//		x
-//	Li(x) = ∫ dt / Log(t) = Ei(Log(x))
-//	       t=0
+//          x
+//  Li(x) = ∫ dt / Log(t) = Ei(Log(x))
+//         t=0
 //
 // where Ei(x) is the exponential integral.
 //
@@ -150,9 +150,9 @@ func Li(x float64) float64 { return Ei(math.Log(x)) }
 
 // Li2 returns the secondary logarithmic integral of x, defined for x ≥ 0 by
 //
-//		 x
-//	Li2(x) = ∫ dt / Log(t) = Li(x) - Li(2)
-//		t=2
+//           x
+//  Li2(x) = ∫ dt / Log(t) = Li(x) - Li(2)
+//          t=2
 //
 // such that Li2(2) = 0, where Li(x) is the primary logarithmic integral.
 //
@@ -171,9 +171,9 @@ func Li2(x float64) float64 {
 
 // En returns the En function, defined by
 //
-//		   ∞
-//	En(n, x) = ∫ dt Exp(-x*t) / t**n
-//		  t=1
+//             ∞
+//  En(n, x) = ∫ dt Exp(-x*t) / t**n
+//            t=1
 //
 // See http://mathworld.wolfram.com/En-Function.html for more information.
 func En(n int, x float64) float64 {
@@ -213,7 +213,7 @@ func encf(n int, x float64) float64 {
 }
 
 // enrec returns the exponential integral En(x) using the recurrence relation
-// En(n+1, x) = (Exp(-x) - x*En(n, x))/n
+//  En(n+1, x) = (Exp(-x) - x*En(n, x))/n
 func enrec(n int, x float64) float64 {
 	k := math.Exp(-x)
 	y := Ei(-x)

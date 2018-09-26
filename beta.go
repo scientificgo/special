@@ -8,7 +8,7 @@ import "math"
 
 // Beta returns the complete beta function, defined by
 //
-//	Beta(x, y) = Gamma(x) Gamma(y) / Gamma(x+y)
+//  Beta(x, y) = Gamma(x) Gamma(y) / Gamma(x+y)
 //
 // where Gamma is the gamma function.
 //
