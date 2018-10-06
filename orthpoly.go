@@ -25,6 +25,9 @@ func ChebyshevT(n int, x float64) float64 {
 	case math.IsInf(x, 1):
 		return float64(s) * x
 	case x == 0:
+		if n%2 == 1 {
+			return 0
+		}
 		return float64(s) * math.Cos(math.Pi*float64(n)/2)
 	case x == 1:
 		return float64(s)
@@ -75,6 +78,9 @@ func ChebyshevU(n int, x float64) float64 {
 	case math.IsInf(x, 1):
 		return float64(s) * x
 	case x == 0:
+		if n%2 == 1 {
+			return 0
+		}
 		return float64(s) * math.Cos(math.Pi*float64(n)/2)
 	case x == 1:
 		return float64(s * (n + 1))
@@ -145,8 +151,8 @@ func JacobiP(n int, a, b, x float64) float64 {
 			r := float64(k+1) * (ka + b + 1) * kkab
 			res, tmp = (p/2*res-q*tmp)/r, res
 		}
-	// Can't use simple recusive relation when -2 ≤ a+b ≤ -2n + 2 as encounter 0 in denominator, for integer a+b.
 	default:
+		// Can't use simple recusive relation when -2 ≤ a+b ≤ -2n + 2 as encounter 0 in denominator, for integer a+b.
 		if a > 0 {
 			n1 := float64(n) + 1
 			res = HypPFQ([]float64{-float64(n), a + b + n1}, []float64{a + 1}, (1-x)/2) * GammaRatio([]float64{a + n1}, []float64{n1, a + 1})
