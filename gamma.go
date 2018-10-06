@@ -4,13 +4,10 @@
 
 package special
 
-import (
-	"github.com/scientificgo/utils"
-	"math"
-)
+import "math"
 
 // GammaSign returns the sign of the Gamma function at x. For non-positive integer x,
-// the sign is given by the residue at x: +1 for even x, -1 for odd x.
+// the sign is given by the sign of the residue, i.e. (-1)**|x|.
 func GammaSign(x float64) int {
 	if x >= 0 {
 		return 1
@@ -49,7 +46,7 @@ func GammaRatio(x, y []float64) float64 {
 //
 // See http://mathworld.wolfram.com/GammaFunction.html for more information.
 func LgammaRatio(x, y []float64) (float64, int) {
-	x, y, nx, ny := utils.ReduceFloat64s(x, y)
+	x, y, nx, ny := removeCommonElements(x, y)
 
 	s := 1
 	res := 0.0

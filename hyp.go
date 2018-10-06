@@ -4,18 +4,15 @@
 
 package special
 
-import (
-	"github.com/scientificgo/utils"
-	"math"
-)
+import "math"
 
 // HypPFQ returns the type-(p,q) generalised hypergeometric function, defined by
 //
 //                   ∞            p-1         q-1
-//    pFq(a; b; x) = ∑ x**k / k! * ∏ (a[i])k / ∏ (b[j])k
+//    pFq(a; b; x) = ∑ x**k / k! * ∏ (a[i])_k / ∏ (b[j])_k
 //                  k=0           i=0         j=0
 //
-// where a = (a[0], ..., a[p]) and similar for b, and (x)k is the k-th Pochhammer
+// where a and b are length p and q respectively and (x)_k is the k-th Pochhammer
 // symbol of x. The function pFq is commonly denoted
 //
 //       | a[0], a[1], ..., a[p-1]    |
@@ -31,8 +28,7 @@ func HypPFQ(a, b []float64, x float64) float64 {
 	}
 
 	// Remove values common to a and b.
-	var p, q int
-	a, b, p, q = utils.ReduceFloat64s(a, b)
+	a, b, na, nb := removeCommonElements(a, b)
 
 	// If a or b have any infinite parameters, note the index of those parameters.
 	// Any infinite parameters remaining in a and b be oppositely signed due to the removal
@@ -67,12 +63,12 @@ func HypPFQ(a, b []float64, x float64) float64 {
 		ainfi := ainf[nainf-1]
 		nainf--
 		a = append(a[:ainfi], a[ainfi+1:]...)
-		p--
+		na--
 
 		binfi := binf[nbinf-1]
 		nbinf--
 		b = append(b[:binfi], b[binfi+1:]...)
-		q--
+		nb--
 
 		x = -x
 	}
@@ -86,7 +82,7 @@ func HypPFQ(a, b []float64, x float64) float64 {
 		nbinf--
 		x = math.Copysign(1, x*b[binfi])
 		b = append(b[:binfi], b[binfi+1:]...)
-		q--
+		nb--
 	}
 
 	// Case 3. The sum is divergent.
@@ -94,13 +90,13 @@ func HypPFQ(a, b []float64, x float64) float64 {
 		return math.NaN()
 	}
 
-	// Sum reduces to ∑ x**k / k! = Exp(x) when p = q = 0.
-	if p == 0 && q == 0 {
+	// Sum reduces to ∑ x**k / k! = Exp(x) when na = nb = 0.
+	if na == 0 && nb == 0 {
 		return math.Exp(x)
 	}
 
-	// Sum reduces to (1 - x)**(-a[0]) when p = 0 & q = 1.
-	if p == 1 && q == 0 {
+	// Sum reduces to (1 - x)**(-a[0]) when na = 0 & nb = 1.
+	if na == 1 && nb == 0 {
 		return math.Pow(1-x, -a[0])
 	}
 
@@ -109,11 +105,11 @@ func HypPFQ(a, b []float64, x float64) float64 {
 	// If a or b are empty slices, use NaN.
 
 	amin := math.NaN()
-	if p > 0 {
+	if na > 0 {
 		amin = a[0]
 	}
 	bmin := math.NaN()
-	if q > 0 {
+	if nb > 0 {
 		bmin = b[0]
 	}
 	for _, ai := range a {
@@ -151,20 +147,20 @@ func HypPFQ(a, b []float64, x float64) float64 {
 		istrunc = true
 	}
 
-	// Sum diverges when p > q + 1 unless it has been truncated.
-	if p > q+1 && !istrunc {
+	// Sum diverges when na > nb + 1 unless it has been truncated.
+	if na > nb+1 && !istrunc {
 		return math.NaN()
 	}
 
-	// Sum diverges when p = q + 1  and |x| > 1 unless it has been truncated.
-	if p == q+1 && math.Abs(x) > 1 && !istrunc {
+	// Sum diverges when na = nb + 1  and |x| > 1 unless it has been truncated.
+	if na == nb+1 && math.Abs(x) > 1 && !istrunc {
 		return math.NaN()
 	}
 
 	switch {
-	case p == 1 && q == 1:
+	case na == 1 && nb == 1:
 		return hyp1f1(a[0], b[0], x, numt, tol, istrunc)
-	case p == 2 && q == 1:
+	case na == 2 && nb == 1:
 		return hyp2f1(a[0], a[1], b[0], x, numt, tol)
 	default:
 		t := 1.0
@@ -173,10 +169,10 @@ func HypPFQ(a, b []float64, x float64) float64 {
 			kk := float64(k)
 			t *= x / kk
 			kk--
-			for i := 0; i < p; i++ {
+			for i := 0; i < na; i++ {
 				t *= kk + a[i]
 			}
-			for i := 0; i < q; i++ {
+			for i := 0; i < nb; i++ {
 				t /= kk + b[i]
 			}
 			res += t
