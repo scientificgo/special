@@ -7,8 +7,12 @@
 
 # special
 
-Special functions for [Go](https://golang.org).
+Package `special` provides special mathematical functions for [Go](https://golang.org). Please consult the [GoDoc](https://godoc.org/github.com/scientificgo/special) page for specific details and visit [ScientificGo](https://scientificgo.org) to see more scientific packages for Go.
+
+### Installation
+
+`go get github.com/scientificgo/special`
 
 ### Usage
 
-`go install -i scientificgo/special`
+`import github.com/scientificgo/special`
