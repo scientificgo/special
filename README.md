@@ -1,3 +1,8 @@
+---
+layout: default
+title: special
+---
+
 [![GoDoc](https://godoc.org/github.com/scientificgo/special?status.svg)](https://godoc.org/github.com/scientificgo/special)
 [![Go Report Card](https://goreportcard.com/badge/github.com/scientificgo/special)](https://goreportcard.com/report/github.com/scientificgo/special)
 [![Coverage](https://codecov.io/gh/scientificgo/special/branch/master/graph/badge.svg)](https://codecov.io/gh/scientificgo/special)
