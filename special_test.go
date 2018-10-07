@@ -6,9 +6,9 @@ package special_test
 
 import (
 	"fmt"
-	. "github.com/scientificgo/special"
-	"github.com/scientificgo/utils"
 	"math"
+	. "scientificgo.org/special"
+	"scientificgo.org/testutils"
 	"testing"
 )
 
@@ -46,7 +46,7 @@ func test(t *testing.T, tol float64, cases []testcase, tag, fname string, f test
 		for _, c := range cases {
 			c0 := c[0]
 			c1 := c[1]
-			if out := f(c0); !utils.EqualFloat64s(out, c1, tol) {
+			if out := f(c0); !testutils.EqualFloat64s(out, c1, tol) {
 				errmsg(t, 5, fname, c0, c1, out)
 			}
 		}
