@@ -2,12 +2,9 @@
 // Use of this source code is governed by the BSD 3-Clause
 // license that can be found in the LICENSE file.
 
-package poly
+package special
 
-import (
-	"math"
-	"scientificgo.org/special"
-)
+import "math"
 
 // JacobiP returns the nth Jacobi polynomial with parameters a, b at x.
 //
@@ -49,16 +46,16 @@ func JacobiP(n int, a, b, x float64) float64 {
 		// Can't use simple recusive relation when -2 ≤ a+b ≤ -2n + 2 as encounter 0 in denominator, for integer a+b.
 		if a > 0 {
 			n1 := float64(n) + 1
-			res = special.HypPFQ([]float64{-float64(n), a + b + n1}, []float64{a + 1}, (1-x)/2) * special.GammaRatio([]float64{a + n1}, []float64{n1, a + 1})
+			res = HypPFQ([]float64{-float64(n), a + b + n1}, []float64{a + 1}, (1-x)/2) * GammaRatio([]float64{a + n1}, []float64{n1, a + 1})
 		} else if b > 0 {
 			n1 := float64(n) + 1
-			res = special.HypPFQ([]float64{-float64(n), a + b + n1}, []float64{b + 1}, (1+x)/2) * special.GammaRatio([]float64{-b}, []float64{n1, -b - float64(n)})
+			res = HypPFQ([]float64{-float64(n), a + b + n1}, []float64{b + 1}, (1+x)/2) * GammaRatio([]float64{-b}, []float64{n1, -b - float64(n)})
 		} else {
 			n1 := float64(n) + 1
 			an := a + float64(n)
 			abn := an + b
 			ab2n := abn + float64(n)
-			res = special.HypPFQ([]float64{-float64(n), -an}, []float64{-ab2n}, 2/(1-x)) * special.GammaRatio([]float64{ab2n + 1}, []float64{n1, abn + 1}) * math.Pow((x-1)/2, float64(n))
+			res = HypPFQ([]float64{-float64(n), -an}, []float64{-ab2n}, 2/(1-x)) * GammaRatio([]float64{ab2n + 1}, []float64{n1, abn + 1}) * math.Pow((x-1)/2, float64(n))
 		}
 	}
 	return float64(s) * res

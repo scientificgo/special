@@ -2,10 +2,10 @@
 // Use of this source code is governed by the BSD 3-Clause
 // license that can be found in the LICENSE file.
 
-package poly_test
+package special_test
 
 import (
-	. "scientificgo.org/special/poly"
+	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
 	"testing"
 )
@@ -19,6 +19,7 @@ var casesChebyshevU = []struct {
 	{"", 9, +inf, +inf},
 	{"", 8, -inf, +inf},
 	{"", 9, -inf, -inf},
+	{"", 3, 0, 0},
 	{"", 10, 0, -1},
 	{"", 11, 1, 12},
 	{"", 11, -1, -12},
