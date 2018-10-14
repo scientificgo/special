@@ -6,10 +6,12 @@ package special
 
 import "math"
 
+// Chi returns the hyperbolic cosine integral evaluated at x.
 func Chi(x float64) float64 {
 	return Ei(x) - Shi(x)
 }
 
+// Shi returns the hyperbolic sine integral evaluated at x.
 func Shi(x float64) float64 {
 	if x == 0 {
 		return 0
