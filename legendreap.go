@@ -37,7 +37,7 @@ func LegendreAP(n, m int, x float64) float64 {
 	// P(|m|, |m|, x)
 	res := float64(sign) * math.Pow(1-x*x, float64(m)/2) * math.Gamma(float64(m)+0.5) / math.SqrtPi * float64(int(1<<uint(m)))
 	if n > m {
-		// Use recurrance formula to go from P(|m|, |m|, x) to P(n, |m|, x),
+		// Use recurrence formula to go from P(|m|, |m|, x) to P(n, |m|, x),
 		// using a special case to get P(|m|+1, |m|, x).
 		tmp := res
 		res = x * float64(2*m+1) * res
