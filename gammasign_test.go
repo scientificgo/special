@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesGammaSign = []struct {
@@ -24,7 +25,7 @@ var casesGammaSign = []struct {
 	{"", -2.0, 1},
 }
 
-func TestGammaSign(t *testing.T) { testutils.Test(t, tol, GammaSign, casesGammaSign) }
+func TestGammaSign(t *testing.T) { testutils.Test(t, tol, casesGammaSign, GammaSign) }
 
 /*
 func BenchmarkGammaSign(b *testing.B) {

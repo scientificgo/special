@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesDigamma = []struct {
@@ -26,20 +27,8 @@ var casesDigamma = []struct {
 	{"", 4.9, 1.483737793254897},
 	{"", -4.9, -7.981008564556067},
 }
-var casesHarmonic = []struct {
-	Label   string
-	In, Out float64
-}{
-	{"", -inf, nan},
-	{"", 0, 0},
-	{"", 1, 1},
-	{"", 2, 1.5},
-	{"", 20, 3.597739657143682},
-	{"", 50, 4.499205338329425},
-}
 
-func TestDigamma(t *testing.T)  { testutils.Test(t, tol, Digamma, casesDigamma) }
-func TestHarmonic(t *testing.T) { testutils.Test(t, tol, Harmonic, casesHarmonic) }
+func TestDigamma(t *testing.T) { testutils.Test(t, tol, casesDigamma, Digamma) }
 
 /*
 func BenchmarkDigamma(b *testing.B) {

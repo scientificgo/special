@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesSi = []struct {
@@ -31,7 +32,7 @@ var casesSi = []struct {
 }
 
 func TestSi(t *testing.T) {
-	testutils.Test(t, tol, Si, casesSi)
+	testutils.Test(t, tol, casesSi, Si)
 }
 
 /*
@@ -56,7 +57,7 @@ var casesCi = []struct {
 }
 
 func TestCi(t *testing.T) {
-	testutils.Test(t, tol, Ci, casesCi)
+	testutils.Test(t, tol, casesCi, Ci)
 }
 
 /*
@@ -80,7 +81,7 @@ var casesCin = []struct {
 }
 
 func TestCin(t *testing.T) {
-	testutils.Test(t, tol, Cin, casesCin)
+	testutils.Test(t, tol, casesCin, Cin)
 }
 
 /*

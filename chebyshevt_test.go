@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesChebyshevT = []struct {
@@ -45,7 +46,7 @@ var casesChebyshevT = []struct {
 	{"", 500, -2.01, 8.3615293546276484931403502395120260481233491510195613e+286},
 }
 
-func TestChebyshevT(t *testing.T) { testutils.Test(t, tol, ChebyshevT, casesChebyshevT) }
+func TestChebyshevT(t *testing.T) { testutils.Test(t, tol, casesChebyshevT, ChebyshevT) }
 
 /*
 func BenchmarkChebyshevT(b *testing.B) {

@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesFibonacci = []struct {
@@ -30,5 +31,5 @@ var casesFibonacci = []struct {
 }
 
 func TestFibonacci(t *testing.T) {
-	testutils.Test(t, tol, Fibonacci, casesFibonacci)
+	testutils.Test(t, tol, casesFibonacci, Fibonacci)
 }

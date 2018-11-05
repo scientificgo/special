@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesPoch = []struct {
@@ -54,5 +55,5 @@ var casesPoch = []struct {
 }
 
 func TestPoch(t *testing.T) {
-	testutils.Test(t, tol, Poch, casesPoch)
+	testutils.Test(t, tol, casesPoch, Poch)
 }

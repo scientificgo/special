@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesShi = []struct {
@@ -31,8 +32,8 @@ var casesChi = []struct {
 	{"", 20, 1.28078263320282943610629339487996274627064136343962909e+07},
 }
 
-func TestShi(t *testing.T) { testutils.Test(t, tol, Shi, casesShi) }
-func TestChi(t *testing.T) { testutils.Test(t, tol, Chi, casesChi) }
+func TestShi(t *testing.T) { testutils.Test(t, tol, casesShi, Shi) }
+func TestChi(t *testing.T) { testutils.Test(t, tol, casesChi, Chi) }
 
 /*
 func BenchmarkShi(b *testing.B) {
