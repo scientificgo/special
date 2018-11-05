@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesGammaRatio = []struct {
@@ -34,5 +35,5 @@ var casesGammaRatio = []struct {
 }
 
 func TestGammaRatio(t *testing.T) {
-	testutils.Test(t, tol, GammaRatio, casesGammaRatio)
+	testutils.Test(t, tol, casesGammaRatio, GammaRatio)
 }

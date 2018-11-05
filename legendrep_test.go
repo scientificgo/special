@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesLegendreP = []struct {
@@ -22,7 +23,7 @@ var casesLegendreP = []struct {
 	{"", -2, -3.141, -3.141},
 }
 
-func TestLegendreP(t *testing.T) { testutils.Test(t, tol, LegendreP, casesLegendreP) }
+func TestLegendreP(t *testing.T) { testutils.Test(t, tol, casesLegendreP, LegendreP) }
 
 /*
 func BenchmarkLegendreP(b *testing.B) {

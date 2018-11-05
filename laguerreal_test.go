@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesLaguerreAL = []struct {
@@ -26,7 +27,7 @@ var casesLaguerreAL = []struct {
 	{"", 41, -17, 4.3255, 4.9579126998422110619614409645401386382056238641622942e-08},
 }
 
-func TestLaguerreAL(t *testing.T) { testutils.Test(t, tol, LaguerreAL, casesLaguerreAL) }
+func TestLaguerreAL(t *testing.T) { testutils.Test(t, tol, casesLaguerreAL, LaguerreAL) }
 
 /*
 func BenchmarkLaguerreAL(b *testing.B) {

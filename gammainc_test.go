@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesGammaIncU = []struct {
@@ -60,13 +61,13 @@ var casesGammaIncIdentity = []struct {
 	{"", 150.5, 1.943e+07, 4.661072627097374e+261},
 }
 
-func TestGammaIncU(t *testing.T) { testutils.Test(t, tol, GammaIncU, casesGammaIncU) }
-func TestGammaIncL(t *testing.T) { testutils.Test(t, tol, GammaIncL, casesGammaIncL) }
+func TestGammaIncU(t *testing.T) { testutils.Test(t, tol, casesGammaIncU, GammaIncU) }
+func TestGammaIncL(t *testing.T) { testutils.Test(t, tol, casesGammaIncL, GammaIncL) }
 func TestGammaIncIdentity(t *testing.T) {
 	identity := func(a, x float64) float64 {
 		return GammaIncU(a, x) + GammaIncL(a, x)
 	}
-	testutils.Test(t, tol, identity, casesGammaIncIdentity)
+	testutils.Test(t, tol, casesGammaIncIdentity, identity)
 }
 
 /*

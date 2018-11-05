@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesLgammaRatio = []struct {
@@ -51,7 +52,7 @@ var casesLgammaRatio = []struct {
 	{"", []float64{-3.056675e-05}, []float64{2.99486e-05}, -0.020395307538563508, -1},
 }
 
-func TestLgammaRatio(t *testing.T) { testutils.Test(t, tol, LgammaRatio, casesLgammaRatio) }
+func TestLgammaRatio(t *testing.T) { testutils.Test(t, tol, casesLgammaRatio, LgammaRatio) }
 
 /*
 func BenchmarkLgammaRatio(b *testing.B) {

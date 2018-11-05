@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesTrigamma = []struct {
@@ -28,7 +29,7 @@ var casesTrigamma = []struct {
 }
 
 func TestTrigamma(t *testing.T) {
-	testutils.Test(t, tol, Trigamma, casesTrigamma)
+	testutils.Test(t, tol, casesTrigamma, Trigamma)
 }
 
 /*

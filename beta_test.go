@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesBeta = []struct {
@@ -37,5 +38,5 @@ var casesBeta = []struct {
 }
 
 func TestBeta(t *testing.T) {
-	testutils.Test(t, tol, Beta, casesBeta)
+	testutils.Test(t, tol, casesBeta, Beta)
 }

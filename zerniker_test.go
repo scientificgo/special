@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesZernikeR = []struct {
@@ -21,7 +22,7 @@ var casesZernikeR = []struct {
 	{"", 43, 41, 53.5, 8.9646400010525796235939120335742702428482112823125695e+75},
 }
 
-func TestZernikeR(t *testing.T) { testutils.Test(t, tol, ZernikeR, casesZernikeR) }
+func TestZernikeR(t *testing.T) { testutils.Test(t, tol, casesZernikeR, ZernikeR) }
 
 /*
 func BenchmarkZernikeR(b *testing.B) {

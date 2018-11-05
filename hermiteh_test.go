@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesHermiteH = []struct {
@@ -23,7 +24,7 @@ var casesHermiteH = []struct {
 	{"", 43, 53.5, 1.56492249523929575819638209988328890215202268133174998288e+87},
 }
 
-func TestHermiteH(t *testing.T) { testutils.Test(t, tol, HermiteH, casesHermiteH) }
+func TestHermiteH(t *testing.T) { testutils.Test(t, tol, casesHermiteH, HermiteH) }
 
 /*
 func BenchmarkHermiteH(b *testing.B) {

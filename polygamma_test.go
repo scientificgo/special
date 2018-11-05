@@ -5,9 +5,10 @@
 package special_test
 
 import (
+	"testing"
+
 	. "scientificgo.org/special"
 	"scientificgo.org/testutils"
-	"testing"
 )
 
 var casesPolygamma = []struct {
@@ -97,7 +98,7 @@ var casesPolygamma = []struct {
 	{"", 111, 1, 1.7629525510902446e+180},
 }
 
-func TestPolygamma(t *testing.T) { testutils.Test(t, tol, Polygamma, casesPolygamma) }
+func TestPolygamma(t *testing.T) { testutils.Test(t, tol, casesPolygamma, Polygamma) }
 
 /*
 func BenchmarkPolygamma(b *testing.B) {
