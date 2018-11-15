@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesFibonacci = []struct {
@@ -31,5 +31,5 @@ var casesFibonacci = []struct {
 }
 
 func TestFibonacci(t *testing.T) {
-	testutils.Test(t, tol, casesFibonacci, Fibonacci)
+	testutil.Test(t, tol, casesFibonacci, Fibonacci)
 }

@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesGegenbauerC = []struct {
@@ -28,7 +28,7 @@ var casesGegenbauerC = []struct {
 	{"", 40, -14.9, 4.3255, -1.280764317783101302989751939635266543812346402681405e+24},
 }
 
-func TestGegenbauerC(t *testing.T) { testutils.Test(t, tol, casesGegenbauerC, GegenbauerC) }
+func TestGegenbauerC(t *testing.T) { testutil.Test(t, tol, casesGegenbauerC, GegenbauerC) }
 
 /*
 func BenchmarkGegenbauerC(b *testing.B) {

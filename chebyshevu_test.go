@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesChebyshevU = []struct {
@@ -53,7 +53,7 @@ var casesChebyshevU = []struct {
 	{"", 67, 1.5e+04, 9.2709456349204110975326780846673773440744578594774910e+299},
 }
 
-func TestChebyshevU(t *testing.T) { testutils.Test(t, tol, casesChebyshevU, ChebyshevU) }
+func TestChebyshevU(t *testing.T) { testutil.Test(t, tol, casesChebyshevU, ChebyshevU) }
 
 /*
 func BenchmarkChebyshevU(b *testing.B) {
