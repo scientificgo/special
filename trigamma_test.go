@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesTrigamma = []struct {
@@ -29,7 +29,7 @@ var casesTrigamma = []struct {
 }
 
 func TestTrigamma(t *testing.T) {
-	testutils.Test(t, tol, casesTrigamma, Trigamma)
+	testutil.Test(t, tol, casesTrigamma, Trigamma)
 }
 
 /*

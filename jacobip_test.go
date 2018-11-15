@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesJacobiP = []struct {
@@ -37,7 +37,7 @@ var casesJacobiP = []struct {
 	{"", 24, -10, -13, -0.222, -1.4477482169375526351080034565874610694581906994323984e-07},
 }
 
-func TestJacobiP(t *testing.T) { testutils.Test(t, tol, casesJacobiP, JacobiP) }
+func TestJacobiP(t *testing.T) { testutil.Test(t, tol, casesJacobiP, JacobiP) }
 
 /*
 func BenchmarkJacobiP(b *testing.B) {

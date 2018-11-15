@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesZeta = []struct {
@@ -48,7 +48,7 @@ var casesZeta = []struct {
 	{"", -3.2, 0.007011972077091051},
 }
 
-func TestZeta(t *testing.T) { testutils.Test(t, tol, casesZeta, Zeta) }
+func TestZeta(t *testing.T) { testutil.Test(t, tol, casesZeta, Zeta) }
 
 /*
 func BenchmarkZeta(b *testing.B) {

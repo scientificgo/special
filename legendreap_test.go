@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesLegendreAP = []struct {
@@ -26,7 +26,7 @@ var casesLegendreAP = []struct {
 	{"", -154, 11, 1e-5, 7.1211274720051580808679401818532702913164641927292374e+22},
 }
 
-func TestLegendreAP(t *testing.T) { testutils.Test(t, tol, casesLegendreAP, LegendreAP) }
+func TestLegendreAP(t *testing.T) { testutil.Test(t, tol, casesLegendreAP, LegendreAP) }
 
 /*
 func BenchmarkLegendreAP(b *testing.B) {

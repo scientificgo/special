@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesHarmonic = []struct {
@@ -23,4 +23,4 @@ var casesHarmonic = []struct {
 	{"", 50, 4.499205338329425},
 }
 
-func TestHarmonic(t *testing.T) { testutils.Test(t, tol, casesHarmonic, Harmonic) }
+func TestHarmonic(t *testing.T) { testutil.Test(t, tol, casesHarmonic, Harmonic) }

@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesGammaRegQ = []struct {
@@ -42,7 +42,7 @@ var casesGammaRegQ = []struct {
 	{"", -9.99, 1e-30, 1.7779299225269738e+303},
 }
 
-func TestGammaRegQ(t *testing.T) { testutils.Test(t, tol, casesGammaRegQ, GammaRegQ) }
+func TestGammaRegQ(t *testing.T) { testutil.Test(t, tol, casesGammaRegQ, GammaRegQ) }
 
 /*
 func BenchmarkGammaRegQ(b *testing.B) {
@@ -102,7 +102,7 @@ var casesGammaRegP = []struct {
 	{"", -19.2, 0.00199, -1.561103376783299e+67},
 }
 
-func TestGammaRegP(t *testing.T) { testutils.Test(t, tol, casesGammaRegP, GammaRegP) }
+func TestGammaRegP(t *testing.T) { testutil.Test(t, tol, casesGammaRegP, GammaRegP) }
 
 /*
 func BenchmarkGammaRegP(b *testing.B) {

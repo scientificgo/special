@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesHypPFQ = []struct {
@@ -146,7 +146,7 @@ var casesHypPFQ = []struct {
 	{"Hyp8F3", []float64{-11, 9, 7, 2, 9, 7, 0.17, 19}, []float64{23.4, 0.05, -2.222}, 0.25, 1.4411904034175893283258108991983096641926408333514947e+46},
 }
 
-func TestPFQ(t *testing.T) { testutils.Test(t, tol, casesHypPFQ, HypPFQ) }
+func TestPFQ(t *testing.T) { testutil.Test(t, tol, casesHypPFQ, HypPFQ) }
 
 /*
 func BenchmarkHyp0f1(b *testing.B) {

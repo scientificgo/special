@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesLi = []struct {
@@ -33,7 +33,7 @@ var casesLi = []struct {
 }
 
 func TestLi(t *testing.T) {
-	testutils.Test(t, tol, casesLi, Li)
+	testutil.Test(t, tol, casesLi, Li)
 }
 
 /*

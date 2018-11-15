@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesGammaIncU = []struct {
@@ -61,13 +61,13 @@ var casesGammaIncIdentity = []struct {
 	{"", 150.5, 1.943e+07, 4.661072627097374e+261},
 }
 
-func TestGammaIncU(t *testing.T) { testutils.Test(t, tol, casesGammaIncU, GammaIncU) }
-func TestGammaIncL(t *testing.T) { testutils.Test(t, tol, casesGammaIncL, GammaIncL) }
+func TestGammaIncU(t *testing.T) { testutil.Test(t, tol, casesGammaIncU, GammaIncU) }
+func TestGammaIncL(t *testing.T) { testutil.Test(t, tol, casesGammaIncL, GammaIncL) }
 func TestGammaIncIdentity(t *testing.T) {
 	identity := func(a, x float64) float64 {
 		return GammaIncU(a, x) + GammaIncL(a, x)
 	}
-	testutils.Test(t, tol, casesGammaIncIdentity, identity)
+	testutil.Test(t, tol, casesGammaIncIdentity, identity)
 }
 
 /*

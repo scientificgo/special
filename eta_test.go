@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesEta = []struct {
@@ -26,4 +26,4 @@ var casesEta = []struct {
 	{"", 1.1, 0.7088088499305867},
 }
 
-func TestEta(t *testing.T) { testutils.Test(t, tol, casesEta, Eta) }
+func TestEta(t *testing.T) { testutil.Test(t, tol, casesEta, Eta) }

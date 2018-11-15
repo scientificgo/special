@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesSphericalHarmonicY = []struct {
@@ -25,7 +25,7 @@ var casesSphericalHarmonicY = []struct {
 }
 
 func TestSphericalHarmonicY(t *testing.T) {
-	testutils.Test(t, tol, casesSphericalHarmonicY, SphericalHarmonicY)
+	testutil.Test(t, tol, casesSphericalHarmonicY, SphericalHarmonicY)
 }
 
 /*

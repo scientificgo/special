@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	. "scientificgo.org/special"
-	"scientificgo.org/testutils"
+	"scientificgo.org/testutil"
 )
 
 var casesDigamma = []struct {
@@ -28,7 +28,7 @@ var casesDigamma = []struct {
 	{"", -4.9, -7.981008564556067},
 }
 
-func TestDigamma(t *testing.T) { testutils.Test(t, tol, casesDigamma, Digamma) }
+func TestDigamma(t *testing.T) { testutil.Test(t, tol, casesDigamma, Digamma) }
 
 /*
 func BenchmarkDigamma(b *testing.B) {
