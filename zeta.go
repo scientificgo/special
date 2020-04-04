@@ -1,4 +1,4 @@
-// Copyright (c) 2018, Jack Parkinson. All rights reserved.
+// Copyright (c) 2020, Jack Parkinson. All rights reserved.
 // Use of this source code is governed by the BSD 3-Clause
 // license that can be found in the LICENSE file.
 
@@ -6,137 +6,78 @@ package special
 
 import "math"
 
-// Zeta returns the Riemann zeta function, defined by
-//            ∞
-//  Zeta(x) = ∑ 1 / n**x
-//           n=1
+// Zeta returns the Riemann Zeta function of x.
 //
-// although it has many other equivalent definitions.
-// This definition is valud for x > 1, however the Zeta function
-// can be analytically continued to the entire complex-plane; this
-// implementation is valid for all real numbers.
+// Special cases are:
+//	Zeta(0) = -1/2
+//	Zeta(1) = +Inf
+//	Zeta(-2k) = 0 for integer k > 0
+//	Zeta(+Inf) = 1
+//	Zeta(-Inf) = NaN
 //
-// See http://mathworld.wolfram.com/RiemannZetaFunction.html for more information.
 func Zeta(x float64) float64 {
-	res := 1.0
-
+	// special cases
 	switch {
-	case math.IsNaN(x) || math.IsInf(x, -1):
-		res = math.NaN()
-		goto end
-	case math.IsInf(x, 1):
-		res = 1
-		goto end
 	case x == 0:
-		res = -1. / 2
-		goto end
+		return -1. / 2
 	case x == 1:
-		res = math.Inf(1)
-		goto end
-	case x == -1:
-		res = -1. / 12
-		goto end
-	case x <= -2 && math.Trunc(x) == x && int(x)&1 == 0:
-		res = 0
-		goto end
+		return +inf
+	case x < 0 && isNonPosInt(x) && int(x)&1 == 0:
+		return 0
+	case math.IsInf(x, 1):
+		return 1
+	case math.IsInf(x, -1) || math.IsNaN(x):
+		return nan
 	}
 
-	const (
-		lnpi = 1.144729885849400174143427351353058711647294812915311571513
-		ln3  = 1.098612288668109691395245236922525704647490557822749451734
-		ln4  = 1.386294361119890618834464242916353136151000268720510508241
-		ln5  = 1.609437912434100374600759333226187639525601354268517721912
-		ln6  = 1.791759469228055000812477358380702272722990692183004705855
-		ln7  = 1.945910149055313305105352743443179729637084729581861188459
-		ln8  = 2.079441541679835928251696364374529704226500403080765762362
-		ln9  = 2.197224577336219382790490473845051409294981115645498903469
-		ln10 = 2.302585092994045684017991454684364207601101488628772976033
-	)
-
-	// Reflection formula.
-	if x < -1 {
-		lg, sg := math.Lgamma(1 - x)
-		res = float64(sg) * math.Exp(x*math.Ln2+(x-1)*lnpi+lg) * math.Sin(math.Pi*x/2)
+	r := 1.
+	if x < -1 { // Zeta(x) = 2 * sin(π*x/2) * (2*π)**(x-1) * Gamma(1-x)
+		theta := math.Remainder(x, 4) * math.Pi / 2
+		r = 2 * math.Sin(theta) * math.Pow(2*math.Pi, x-1) * math.Gamma(1-x)
 		x = 1 - x
 	}
 
-	// Fir |x| ≥ 12, use the first few terms of the series definition as it converges very rapidly as x -> ∞.
-	// For |x| < 12, use the Laurent series expansion.
-	switch xabs := math.Abs(x); {
-	case xabs >= 75:
-		// Nothing to do.
-	case xabs >= 50:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x))
-	case xabs >= 25:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x))
-	case xabs >= 20:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x))
-	case xabs >= 15:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x))
-	case xabs >= 12:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x) +
-			math.Exp(ln7*x) + math.Exp(ln8*x) + math.Exp(ln9*x) + math.Exp(ln10*x))
-	default:
-		res *= zetalaurent(x)
-	}
-end:
-	return res
-}
+	if x >= 13 { // use prime factorisation Euler product definition
+		if x >= 53 { // 2**-53 is tiny, so all terms in product ~ 1
+			return r
+		}
 
-// zetalaurent returns the zeta function using the Laurent expansion around x=1.
-func zetalaurent(x float64) float64 {
-	const (
-		maxiter = 200
-		tol     = 1e-17
-	)
+		//            ∞
+		//  Zeta(x) = Π 1/(1 - 1/p**x)
+		//            p
+
+		iz := 1.
+		for _, lnp := range _lnprimes {
+			q := math.Exp(-x * lnp)
+			iz *= 1 - q
+			if math.Abs(q) < macheps {
+				break
+			}
+		}
+		return r / iz
+	}
+
+	//             1        ∞  (-1)**k * γ_k * (x-1)**k
+	//  Zeta(x) = --- + γ + Σ  ------------------------
+	//            x-1      k=1            k!
 
 	x--
-	res := _zl[0] + _zl[1]*x
-	for i, tmp := 2, x; i < maxiter && math.Abs(_zl[i]*tmp/res) > tol; i++ {
-		tmp *= x
-		res += _zl[i] * tmp
+	z := 0.
+	xx := x
+	for _, c := range _zeta {
+		t := c * xx
+		z += t
+		if math.Abs(t/z) < macheps {
+			break
+		}
+		xx *= x
 	}
-	return res + 1/x
+	z += 1/x + Euler
+	return r * z
 }
 
-// Eta returns the Dirichlet eta function, defined by
-//
-//           ∞
-//  Eta(x) = ∑ (-1)**(n+1) / n**x = (1 - 2**(1-x)) Zeta(x)
-//          n=1
-//
-// where Zeta is the Riemann zeta function.
-//
-// See http://mathworld.wolfram.com/DirichletEtaFunction.html for more information.
-func Eta(x float64) float64 {
-	switch {
-	case math.IsNaN(x) || math.IsInf(x, -1):
-		return math.NaN()
-	case math.IsInf(x, 1):
-		return 1
-	case x == 0:
-		return 1. / 2
-	case x == 1:
-		return math.Ln2
-	case x == -1:
-		return 1. / 4
-	case x <= -2 && math.Trunc(x) == x && int(x)&1 == 0:
-		return 0
-	default:
-		return (1 - math.Exp((1-x)*math.Ln2)) * Zeta(x)
-	}
-}
-
-// The first 200 expansion coefficients for zetalaurent are precomputed below:
-// _zl[n] = (-1)**n gamma_n / n!
-// where gamma_n is the nth Stieltjes constant.
-var _zl = [200]float64{
-	EulerGamma,
+// (-1)**k * γ_k / k!
+var _zeta = []float64{
 	0.0728158454836767249,
 	-0.00484518159643615924,
 	-0.000342305736717224311,
@@ -336,4 +277,34 @@ var _zl = [200]float64{
 	1.01891445839901791e-312,
 	-1.11915397629212199e-314,
 	8.72893293970527359e-317,
+}
+
+// natural log of prime numbers up to p=101
+var _lnprimes = []float64{
+	0.6931471805599453,
+	1.098612288668110,
+	1.609437912434100,
+	1.945910149055313,
+	2.397895272798371,
+	2.564949357461537,
+	2.833213344056216,
+	2.944438979166440,
+	3.135494215929150,
+	3.367295829986474,
+	3.433987204485146,
+	3.610917912644224,
+	3.713572066704308,
+	3.761200115693562,
+	3.850147601710059,
+	3.970291913552122,
+	4.077537443905719,
+	4.110873864173311,
+	4.204692619390966,
+	4.262679877041315,
+	4.290459441148391,
+	4.369447852467021,
+	4.418840607796598,
+	4.488636369732140,
+	4.574710978503383,
+	4.615120516841259,
 }
