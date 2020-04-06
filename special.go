@@ -18,11 +18,24 @@ const (
 var (
 	nan     = math.NaN()
 	inf     = math.Inf(1)
-	macheps = math.Nextafter(1, 2) - 1
+	macheps = math.Nextafter(1, 2) - 1 // machine epsilon, or ε
 )
 
+// isInt returns true if x is exactly zero or within ε of a non-zero integer.
+func isInt(x float64) bool {
+	r, f := math.Modf(x)
+	if r < 0 {
+		f = -f
+		r = -r
+	}
+	if r+macheps < 1 {
+		return f == 0
+	}
+	return f < macheps || f > 1-macheps
+}
+
 // isNonPosInt returns true if x is a finite non-positive integer.
-func isNonPosInt(x float64) bool { return x <= 0 && !math.IsInf(x, -1) && x == math.Trunc(x) }
+func isNonPosInt(x float64) bool { return x <= 0 && isInt(x) }
 
 // chebeval evaluates the Chebyshev series defined by
 //               n-1
@@ -70,7 +83,7 @@ func poleval(x float64, cs ...float64) (p float64) {
 // the machine precision.
 //
 // This cutoff is necessary since the series is divergent for all
-// x in the limit n -> ∞.
+// x in the limit n → ∞.
 func factorialseries(x float64) float64 {
 	s := 0.
 

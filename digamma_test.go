@@ -61,7 +61,7 @@ var casesDigamma = []struct {
 	{"", -5.99999, -99998.12718808744484731013042716618737233667878},
 
 	// special cases
-	{"", 1., -Euler},   // Digamma(1) = -Gamma
+	{"sc", 1., -Euler}, // Digamma(1) = -Gamma
 	{"sc", 0., nan},    // Digamma(-k) = NaN for non-negative integer k
 	{"sc", -11., nan},  // Digamma(-k) = NaN for non-negative integer k
 	{"sc", +inf, +inf}, // Digamma(+inf) = +inf

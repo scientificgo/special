@@ -32,8 +32,7 @@ func Zeta(x float64) float64 {
 
 	r := 1.
 	if x < -1 { // Zeta(x) = 2 * sin(π*x/2) * (2*π)**(x-1) * Gamma(1-x)
-		theta := math.Remainder(x, 4) * math.Pi / 2
-		r = 2 * math.Sin(theta) * math.Pow(2*math.Pi, x-1) * math.Gamma(1-x)
+		r = 2 * sinPi(x/2) * math.Pow(2*math.Pi, x-1) * math.Gamma(1-x)
 		x = 1 - x
 	}
 

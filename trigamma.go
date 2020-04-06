@@ -32,9 +32,8 @@ func Trigamma(x float64) float64 {
 
 	reflect := false
 	if x < 0 { // Trigamma(x) = π**2 * cosec(π*x)**2 - Trigamma(1-x)
-		theta := math.Remainder(x, 2) * math.Pi
-		picsc := math.Pi / math.Sin(theta)
-		r += picsc * picsc
+		c := math.Pi / sinPi(x)
+		r += c * c
 		x = 1 - x
 		reflect = true
 	}

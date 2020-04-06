@@ -32,8 +32,7 @@ func Digamma(x float64) float64 {
 	}
 
 	if x < 0 { // Digamma(x) = Digamma(1-x) - π*cot(π*x)
-		theta := math.Pi * math.Remainder(x, 1)
-		digamma -= math.Pi / math.Tan(theta)
+		digamma -= math.Pi * cotPi(x)
 		x = 1 - x
 	}
 
