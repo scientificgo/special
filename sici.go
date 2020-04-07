@@ -23,7 +23,7 @@ func Si(x float64) float64 {
 	switch {
 	case math.IsInf(x, 0):
 		return s * math.Pi / 2
-	case x <= 3:
+	case x <= 4:
 		return s * sismall(x)
 	default:
 		f := sicif(x)
@@ -46,8 +46,8 @@ func Ci(x float64) float64 {
 		return nan
 	case math.IsInf(x, 1):
 		return 0
-	case x <= 4:
-		return cismall(x)
+	case x < 4:
+		return Euler + math.Log(x) - cinsmall(x)
 	default:
 		f := sicif(x)
 		g := sicig(x)
@@ -67,7 +67,7 @@ func Cin(x float64) float64 {
 	switch {
 	case math.IsInf(x, 0) || x == 0:
 		return x
-	case x <= 4:
+	case x < 4:
 		return cinsmall(x)
 	default:
 		f := sicif(x)
@@ -80,14 +80,11 @@ func Cin(x float64) float64 {
 // rational approximations for Si, Cin and Ci for |x| <= 4
 func sismall(x float64) float64 {
 	x2 := x * x
-	return x2 * poleval(x2, _sismallA...) / poleval(x2, _sismallB...)
+	return x * poleval(x2, _sismallA...) / poleval(x2, _sismallB...)
 }
 func cinsmall(x float64) float64 {
 	x2 := x * x
 	return -x2 * poleval(x2, _cinsmallA...) / poleval(x2, _cinsmallB...)
-}
-func cismall(x float64) float64 {
-	return Euler + math.Log(x) - cinsmall(x)
 }
 
 // sicif approximates Ci(x)*sin(x) + (π/2 - Si(x))*cos(x) for x > 4
