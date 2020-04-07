@@ -27,19 +27,14 @@ func Ei(x float64) float64 {
 	}
 
 	if x < -1 { // continued fraction
-		ai := func(i int) float64 {
-			if i == 1 {
-				return 1
-			}
-			return float64(i / 2)
-		}
+		ai := func(i int) float64 { return float64(i / 2) }
 		bi := func(i int) float64 {
 			if i%2 == 0 {
 				return 1
 			}
 			return -x
 		}
-		return -math.Exp(x) * gcf(ai, bi)
+		return -math.Exp(x) * GCF(ai, bi)
 	}
 
 	if x >= 40 { // asymptotic expansion

@@ -32,9 +32,6 @@ func En(n int, x float64) float64 {
 	}
 
 	ai := func(i int) float64 {
-		if i == 1 {
-			return 1
-		}
 		if i%2 == 0 {
 			return float64((i-1)/2 + n)
 		}
@@ -46,7 +43,7 @@ func En(n int, x float64) float64 {
 		}
 		return x
 	}
-	return math.Exp(-x) * gcf(ai, bi)
+	return math.Exp(-x) * GCF(ai, bi)
 }
 
 // // enrec evalues En(n, x) using recurrence
@@ -54,7 +51,6 @@ func En(n int, x float64) float64 {
 //  // En(n+1, x) = (Exp(-x) - x*En(n, x)) / n
 // 	a := math.Exp(-x)
 // 	s := Ei(-x) // -En(1, x)
-
 // 	s = a + x*s
 // 	for i := 2; i < n; i++ {
 // 		s = (a - x*s)
