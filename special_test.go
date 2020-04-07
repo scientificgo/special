@@ -7,7 +7,9 @@ package special_test
 import "math"
 
 var (
-	nan     = math.NaN()
-	inf     = math.Inf(1)
+	nan       = math.NaN()
+	inf       = math.Inf(1)
+	minusZero = -1 / inf
+
 	macheps = math.Nextafter(1, 2) - 1
 )

@@ -22,17 +22,19 @@ func Zeta(x float64) float64 {
 		return -1. / 2
 	case x == 1:
 		return +inf
-	case x < 0 && isNonPosInt(x) && int(x)&1 == 0:
-		return 0
-	case math.IsInf(x, 1):
-		return 1
 	case math.IsInf(x, -1) || math.IsNaN(x):
 		return nan
+	case math.IsInf(x, 1):
+		return 1
+	case x < 0:
+		if i, ok := isNonPosInt(x); ok && math.Mod(i, 2) == 0 {
+			return 0
+		}
 	}
 
 	r := 1.
 	if x < -1 { // Zeta(x) = 2 * sin(π*x/2) * (2*π)**(x-1) * Gamma(1-x)
-		r = 2 * sinPi(x/2) * math.Pow(2*math.Pi, x-1) * math.Gamma(1-x)
+		r = 2 * SinPi(x/2) * math.Pow(2*math.Pi, x-1) * math.Gamma(1-x)
 		x = 1 - x
 	}
 

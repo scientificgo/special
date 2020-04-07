@@ -17,12 +17,17 @@ import "math"
 func Digamma(x float64) float64 {
 	// special cases
 	switch {
-	case isNonPosInt(x) || math.IsInf(x, -1) || math.IsNaN(x):
+	case math.IsInf(x, -1) || math.IsNaN(x):
 		return nan
-	case x == 1:
-		return -Euler
+	case x <= 0:
+		if _, isint := isNonPosInt(x); isint {
+			return nan
+		}
 	case math.IsInf(x, 1):
 		return x
+	case x == 1:
+		return -Euler
+
 	}
 
 	digamma := 0.
@@ -32,7 +37,7 @@ func Digamma(x float64) float64 {
 	}
 
 	if x < 0 { // Digamma(x) = Digamma(1-x) - π*cot(π*x)
-		digamma -= math.Pi * cotPi(x)
+		digamma -= math.Pi * CotPi(x)
 		x = 1 - x
 	}
 
