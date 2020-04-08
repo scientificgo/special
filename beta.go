@@ -16,6 +16,7 @@ import "math"
 //  Beta(x ≤ 0, y ≤ 0) = NaN for integer x and y
 //  Beta(x ≤ 0, y) = NaN for integer x and non-integer y or integer y > -x
 //  Beta(x, y) = 0 for non-integer x and y and integer x+y ≤ 0
+//
 func Beta(x, y float64) float64 {
 	// special cases
 	if math.IsInf(x, 0) || math.IsInf(y, 0) {
