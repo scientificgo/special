@@ -15,10 +15,11 @@ const (
 	LnPhi = 0.481211825059603447497758913424368423135184334385660519661018168840163867608221774412009429122723474 // https://oeis.org/A002390
 )
 
+const macheps = 2. / (1 << 53) // machine epsilon, or ε. Numerically equivalent to math.Nextafter(1, 2) - 1
+
 var (
-	nan     = math.NaN()
-	inf     = math.Inf(1)
-	macheps = math.Nextafter(1, 2) - 1 // machine epsilon, or ε
+	nan = math.NaN()
+	inf = math.Inf(1)
 )
 
 // isInt returns true if x is exactly zero or within ε of a non-zero integer.
