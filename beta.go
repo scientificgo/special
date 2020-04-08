@@ -65,10 +65,18 @@ func Beta(x, y float64) float64 {
 		//  Gamma(x+y)    Gamma(1-x)
 		//
 
-		x, z = 1-z, 1-x
 		if math.Mod(y, 2) == 1 {
 			sign = -sign
 		}
+
+		// If x+y=0, the above simplifies to (-1)**y / Gamma(1+y)
+		// so the function is just (-1)**y / y.
+
+		if z == 0 {
+			return float64(sign) / y
+		}
+
+		x, z = 1-z, 1-x
 	}
 
 	// Beta(x, y) = Gamma(x) * Gamma(y) / Gamma(x+y)
@@ -91,11 +99,10 @@ func Beta(x, y float64) float64 {
 		y /= 2
 		z /= 2
 
-		// if z is still very large, use the asymptotic series for the remaining Gamma terms
-
+		// if z is still very large, use an asymptotic series for the ratio of Gamma functions
 		if z > 170 {
-			s := math.Sqrt(z)
-			s += poleval(1/z, 1./8, 1./128, -5./1024, -21./32768, 399./262144) / s
+			s := z + poleval(1/z, 1./8, 1./128, -5./1024, -21./32768, 399./262144)
+			s /= math.Sqrt(z)
 			return 0.5 * Beta(x, y) * Beta(x+0.5, y+0.5) * s / math.SqrtPi * float64(sign)
 		}
 
