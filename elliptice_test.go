@@ -12,7 +12,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolEllipticE = 2e-16
+const tolEllipticE = 1 * Macheps
 
 var casesEllipticE = []struct {
 	Label   string
@@ -61,9 +61,9 @@ var casesEllipticE = []struct {
 
 	{"sc", 0, math.Pi / 2},
 	{"sc", 1, 1},
-	{"sc", -inf, +inf},
-	{"sc", +inf, nan},
-	{"sc", nan, nan},
+	{"sc", -Inf, +Inf},
+	{"sc", +Inf, NaN},
+	{"sc", NaN, NaN},
 }
 
 func TestEllipticE(t *testing.T) { testutil.Test(t, tolEllipticE, casesEllipticE, EllipticE) }

@@ -11,7 +11,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolDigamma = 5 * macheps
+const tolDigamma = 5 * Macheps
 
 var casesDigamma = []struct {
 	Label   string
@@ -62,11 +62,11 @@ var casesDigamma = []struct {
 
 	// special cases
 	{"sc", 1., -Euler}, // Digamma(1) = -Gamma
-	{"sc", 0., nan},    // Digamma(-k) = NaN for non-negative integer k
-	{"sc", -11., nan},  // Digamma(-k) = NaN for non-negative integer k
-	{"sc", +inf, +inf}, // Digamma(+inf) = +inf
-	{"sc", -inf, nan},  // Digamma(-inf) = NaN
-	{"sc", nan, nan},
+	{"sc", 0., NaN},    // Digamma(-k) = NaN for non-negative integer k
+	{"sc", -11., NaN},  // Digamma(-k) = NaN for non-negative integer k
+	{"sc", +Inf, +Inf}, // Digamma(+Inf) = +Inf
+	{"sc", -Inf, NaN},  // Digamma(-Inf) = NaN
+	{"sc", NaN, NaN},
 }
 
 func TestDigamma(t *testing.T) { testutil.Test(t, tolDigamma, casesDigamma, Digamma) }

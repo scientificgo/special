@@ -11,7 +11,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolZeta = 4 * macheps
+const tolZeta = 4 * Macheps
 
 var casesZeta = []struct {
 	Label   string
@@ -53,12 +53,12 @@ var casesZeta = []struct {
 	{"", -90.30304810855154, 7.0956809424033800544733759e+65},
 
 	// special cases
-	{"sc", 1, +inf},   // Zeta(1) = +inf
+	{"sc", 1, +Inf},   // Zeta(1) = +Inf
 	{"sc", 0, -0.5},   // Zeta(0) = -1/2
 	{"sc", -10, 0},    // Zeta(-2k) = 0
-	{"sc", +inf, 1},   // Zeta(+inf) = 1
-	{"sc", -inf, nan}, // Zeta(-inf) = NaN
-	{"sc", nan, nan},
+	{"sc", +Inf, 1},   // Zeta(+Inf) = 1
+	{"sc", -Inf, NaN}, // Zeta(-Inf) = NaN
+	{"sc", NaN, NaN},
 }
 
 func TestZeta(t *testing.T) { testutil.Test(t, tolZeta, casesZeta, Zeta) }

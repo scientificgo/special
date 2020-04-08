@@ -24,7 +24,7 @@ import (
 // to the desired tolerance.
 //
 
-var tolW0 = 1 * macheps
+const tolW0 = 1 * Macheps
 
 var casesW0 = []struct {
 	Label string
@@ -82,8 +82,8 @@ var scasesW0 = []struct {
 	// Special cases
 	{"sc", 0, 0},            // W(0, 0) = 0
 	{"sc", -1 / math.E, -1}, // W(-1/e) = -1
-	{"sc", -3, nan},         // W(x, 0) = NaN for x < -1/e
-	{"sc", +inf, +inf},      // W(+inf, 0) = +inf
+	{"sc", -3, NaN},         // W(x, 0) = NaN for x < -1/e
+	{"sc", +Inf, +Inf},      // W(+Inf, 0) = +Inf
 }
 
 func TestW0(t *testing.T) {
@@ -111,7 +111,7 @@ func BenchmarkW0(b *testing.B) {
 	}
 }
 
-var tolW1 = 1 * macheps
+const tolW1 = 1 * Macheps
 
 var casesW1 = []struct {
 	Label string
@@ -141,10 +141,10 @@ var scasesW1 = []struct {
 	Out   float64
 }{
 	// Special cases
-	{"sc", 0, -inf},         // W1(0) = -inf
+	{"sc", 0, -Inf},         // W1(0) = -Inf
 	{"sc", -1 / math.E, -1}, // W1(-1/e) = -1
-	{"sc", -3, nan},         // W1(x) = NaN for x < -1/e
-	{"sc", 3, nan},          // W1(x) = NaN for x > 0
+	{"sc", -3, NaN},         // W1(x) = NaN for x < -1/e
+	{"sc", 3, NaN},          // W1(x) = NaN for x > 0
 }
 
 func TestW1(t *testing.T) {

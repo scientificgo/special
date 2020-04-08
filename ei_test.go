@@ -11,7 +11,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolEi = 5 * macheps
+const tolEi = 5 * Macheps
 
 var casesEi = []struct {
 	Label   string
@@ -70,11 +70,11 @@ var casesEi = []struct {
 	{"", -700, -1.406518766234033e-307},
 
 	// special cases
-	{"sc", 750, +inf},
-	{"sc", +inf, +inf},
-	{"sc", -inf, 0},
-	{"sc", 0, -inf},
-	{"sc", nan, nan},
+	{"sc", 750, +Inf},
+	{"sc", +Inf, +Inf},
+	{"sc", -Inf, 0},
+	{"sc", 0, -Inf},
+	{"sc", NaN, NaN},
 }
 
 func TestEi(t *testing.T) {

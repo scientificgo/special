@@ -11,7 +11,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolTrigamma = 2 * macheps
+const tolTrigamma = 2 * Macheps
 
 var casesTrigamma = []struct {
 	Label   string
@@ -31,11 +31,11 @@ var casesTrigamma = []struct {
 	{"", -9.1773313224759e+08, 2.004270014626729594326872621144420283846507969108883303604e+1},
 
 	// Special cases
-	{"sc", 0., +inf},   // Trigamma(-k) = +inf for integer k ≥ 0
-	{"sc", -11., +inf}, // Trigamma(-k) = +inf for integer k ≥ 0
-	{"sc", +inf, 0.},   // Trigamma(+inf) = 0
-	{"sc", -inf, nan},  // Trigamma(-inf) = NaN
-	{"sc", nan, nan},
+	{"sc", 0., +Inf},   // Trigamma(-k) = +Inf for integer k ≥ 0
+	{"sc", -11., +Inf}, // Trigamma(-k) = +Inf for integer k ≥ 0
+	{"sc", +Inf, 0.},   // Trigamma(+Inf) = 0
+	{"sc", -Inf, NaN},  // Trigamma(-Inf) = NaN
+	{"sc", NaN, NaN},
 }
 
 func TestTrigamma(t *testing.T) { testutil.Test(t, tolTrigamma, casesTrigamma, Trigamma) }

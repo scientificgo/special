@@ -11,7 +11,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolLi = 7 * macheps
+const tolLi = 7 * Macheps
 
 var casesLi = []struct {
 	Label   string
@@ -43,10 +43,11 @@ var casesLi = []struct {
 	{"", 1e+307, 1.4166468986856765387208519E+304},
 
 	// special cases
-	{"sc", +inf, +inf},
-	{"sc", 1, -inf},
+	{"sc", +Inf, +Inf},
+	{"sc", 1, -Inf},
 	{"sc", 0, 0},
-	{"sc", -1, nan},
+	{"sc", -1, NaN},
+	{"sc", NaN, NaN},
 }
 
 func TestLi(t *testing.T) {

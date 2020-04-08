@@ -20,6 +20,8 @@ const macheps = 2. / (1 << 53) // machine epsilon, or ε. Numerically equivalent
 var (
 	nan = math.NaN()
 	inf = math.Inf(1)
+
+	negativeZero = -1 / inf
 )
 
 // isInt returns true if x is exactly zero or within ε of a non-zero integer.

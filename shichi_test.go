@@ -11,8 +11,8 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolShi = 1 * macheps
-var tolChi = 5 * macheps
+const tolShi = 1 * Macheps
+const tolChi = 5 * Macheps
 
 var casesShi = []struct {
 	Label   string
@@ -78,13 +78,13 @@ var casesShi = []struct {
 	{"", 128, 1.53069030717144874566525102E+53},
 	{"", 256, 2.96362959682757648524092896E+108},
 	{"", -512, -2.23524693695843996240333172E+219},
-	{"", -800, -inf},
+	{"", -800, -Inf},
 
 	// special cases
 	{"", 0, 0},
-	{"", +inf, +inf},
-	{"", -inf, -inf},
-	{"", nan, nan},
+	{"", +Inf, +Inf},
+	{"", -Inf, -Inf},
+	{"", NaN, NaN},
 }
 var casesChi = []struct {
 	Label   string
@@ -150,12 +150,12 @@ var casesChi = []struct {
 	{"", 128, 1.53069030717144874566525102E+53},
 	{"", 256, 2.96362959682757648524092896E+108},
 	{"", 512, 2.23524693695843996240333172E+219},
-	{"", 800, +inf},
+	{"", 800, +Inf},
 
 	// special cases
-	{"", 0, -inf},
-	{"", -inf, +inf},
-	{"", nan, nan},
+	{"", 0, -Inf},
+	{"", -Inf, +Inf},
+	{"", NaN, NaN},
 }
 
 var shi = func(x float64) float64 { shi, _ := Shichi(x); return shi }

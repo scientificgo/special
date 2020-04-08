@@ -12,7 +12,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolEllipticK = 2 * macheps
+const tolEllipticK = 2 * Macheps
 
 var casesEllipticK = []struct {
 	Label   string
@@ -54,11 +54,11 @@ var casesEllipticK = []struct {
 
 	// special cases
 	{"sc", 0, math.Pi / 2}, // K(0) = π / 2
-	{"sc", 1, +inf},        // K(1) = +inf
-	{"", -inf, 0},          // K(-inf) = 0
-	{"", +inf, nan},        // K(x > 1) = NaN
-	{"sc", 1.2, nan},       // K(x > 1) = NaN
-	{"sc", nan, nan},
+	{"sc", 1, +Inf},        // K(1) = +Inf
+	{"", -Inf, 0},          // K(-Inf) = 0
+	{"", +Inf, NaN},        // K(x > 1) = NaN
+	{"sc", 1.2, NaN},       // K(x > 1) = NaN
+	{"sc", NaN, NaN},
 }
 
 func TestEllipticK(t *testing.T) { testutil.Test(t, tolEllipticK, casesEllipticK, EllipticK) }

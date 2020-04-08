@@ -11,7 +11,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolSinPi = 1 * macheps
+const tolSinPi = 1 * Macheps
 
 var casesSinPi = []struct {
 	Label   string
@@ -23,14 +23,14 @@ var casesSinPi = []struct {
 
 	// special cases
 	{"sc", 0, 0},
-	{"sc", minusZero, minusZero},
+	{"sc", NegativeZero, NegativeZero},
 	{"sc", 1, 0},
 	{"sc", 1e10, 0},
 	{"sc", -55.000000000000001, 0},
 	{"sc", 101.5, -1},
-	{"sc", +inf, nan},
-	{"sc", -inf, nan},
-	{"sc", nan, nan},
+	{"sc", +Inf, NaN},
+	{"sc", -Inf, NaN},
+	{"sc", NaN, NaN},
 }
 
 func TestSinPi(t *testing.T) { testutil.Test(t, tolSinPi, casesSinPi, SinPi) }
@@ -44,7 +44,7 @@ func BenchmarkSinPi(b *testing.B) {
 	}
 }
 
-var tolCosPi = 1 * macheps
+const tolCosPi = 1 * Macheps
 
 var casesCosPi = []struct {
 	Label   string
@@ -56,14 +56,14 @@ var casesCosPi = []struct {
 
 	// special cases
 	{"sc", 0, 1},
-	{"sc", minusZero, 1},
+	{"sc", NegativeZero, 1},
 	{"sc", 1, -1},
 	{"sc", 1e10, 1},
 	{"sc", -55.000000000000001, -1},
 	{"sc", 101.5, 0},
-	{"sc", +inf, nan},
-	{"sc", -inf, nan},
-	{"sc", nan, nan},
+	{"sc", +Inf, NaN},
+	{"sc", -Inf, NaN},
+	{"sc", NaN, NaN},
 }
 
 func TestCosPi(t *testing.T) { testutil.Test(t, tolCosPi, casesCosPi, CosPi) }
@@ -91,7 +91,7 @@ func TestSincosPi(t *testing.T) {
 	testutil.Test(t, tolCosPi, casesCosPi, cosPi)
 }
 
-var tolTanPi = 1 * macheps
+const tolTanPi = 1 * Macheps
 
 var casesTanPi = []struct {
 	Label   string
@@ -103,14 +103,14 @@ var casesTanPi = []struct {
 
 	// special cases
 	{"sc", 0, 0},
-	{"sc", minusZero, minusZero},
+	{"sc", NegativeZero, NegativeZero},
 	{"sc", 1, 0},
 	{"sc", 1e10, 0},
 	{"sc", -55.000000000000001, 0},
-	{"sc", 101.5, +inf},
-	{"sc", +inf, nan},
-	{"sc", -inf, nan},
-	{"sc", nan, nan},
+	{"sc", 101.5, +Inf},
+	{"sc", +Inf, NaN},
+	{"sc", -Inf, NaN},
+	{"sc", NaN, NaN},
 }
 
 func TestTanPi(t *testing.T) { testutil.Test(t, tolTanPi, casesTanPi, TanPi) }
@@ -125,7 +125,7 @@ func BenchmarkTanPi(b *testing.B) {
 	}
 }
 
-var tolCotPi = 1 * macheps
+const tolCotPi = 1 * Macheps
 
 var casesCotPi = []struct {
 	Label   string
@@ -156,15 +156,15 @@ var casesCotPi = []struct {
 	{"", 84.7390380859375, -0.93339177416190551563386356},
 
 	// special cases
-	{"sc", 0, +inf},
-	{"sc", minusZero, -inf},
-	{"sc", 1, +inf},
-	{"sc", 1e10, +inf},
-	{"sc", -55.000000000000001, +inf},
+	{"sc", 0, +Inf},
+	{"sc", NegativeZero, -Inf},
+	{"sc", 1, +Inf},
+	{"sc", 1e10, +Inf},
+	{"sc", -55.000000000000001, +Inf},
 	{"sc", 101.5, 0},
-	{"sc", +inf, nan},
-	{"sc", -inf, nan},
-	{"sc", nan, nan},
+	{"sc", +Inf, NaN},
+	{"sc", -Inf, NaN},
+	{"sc", NaN, NaN},
 }
 
 func TestCotPi(t *testing.T) { testutil.Test(t, tolCotPi, casesCotPi, CotPi) }

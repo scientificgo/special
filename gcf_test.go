@@ -12,7 +12,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolGCF = 2 * macheps
+const tolGCF = 2 * Macheps
 
 var _ones = func(int) float64 { return 1 }
 var _twos = func(int) float64 { return 2 }
@@ -30,6 +30,7 @@ var casesGCF = []struct {
 	{"", _ones, _ones, math.Phi - 1},
 	{"", _ones, _twos, math.Sqrt2 - 1},
 	{"", _squares, _odds, math.Pi / 4},
+	{"", _ones, func(int) float64 { return NaN }, NaN},
 }
 
 func TestGCF(t *testing.T) { testutil.Test(t, tolGCF, casesGCF, GCF) }

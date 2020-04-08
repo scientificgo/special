@@ -12,7 +12,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolSi = 2 * macheps
+const tolSi = 2 * Macheps
 
 var casesSi = []struct {
 	Label   string
@@ -31,8 +31,8 @@ var casesSi = []struct {
 
 	// Special cases
 	{"sc", 0, 0},              // Si(0) = 0
-	{"sc", +inf, math.Pi / 2}, // Si(±inf) = —π/2
-	{"sc", nan, nan},
+	{"sc", +Inf, math.Pi / 2}, // Si(±Inf) = —π/2
+	{"sc", NaN, NaN},
 }
 
 func TestSi(t *testing.T) { testutil.Test(t, tolSi, casesSi, Si) }
@@ -46,7 +46,7 @@ func BenchmarkSi(b *testing.B) {
 	}
 }
 
-var tolCi = 2 * macheps
+const tolCi = 2 * Macheps
 
 var casesCi = []struct {
 	Label   string
@@ -64,10 +64,10 @@ var casesCi = []struct {
 	{"", 5.527147875260445e-76, -172.70957947508479449370152},
 
 	// Special cases
-	{"sc", 0, -inf},    // Ci(0) = -inf
-	{"sc", +inf, 0},    // Ci(+inf) = 0
-	{"sc", -1.23, nan}, // Ci(x) = NaN for x < 0
-	{"sc", nan, nan},
+	{"sc", 0, -Inf},    // Ci(0) = -Inf
+	{"sc", +Inf, 0},    // Ci(+Inf) = 0
+	{"sc", -1.23, NaN}, // Ci(x) = NaN for x < 0
+	{"sc", NaN, NaN},
 }
 
 func TestCi(t *testing.T) { testutil.Test(t, tolCi, casesCi, Ci) }
@@ -81,7 +81,7 @@ func BenchmarkCi(b *testing.B) {
 	}
 }
 
-var tolCin = 1 * macheps
+const tolCin = 1 * Macheps
 
 var casesCin = []struct {
 	Label   string
@@ -97,8 +97,8 @@ var casesCin = []struct {
 
 	// Special cases
 	{"sc", 0, 0},       // Cin(0) = 0
-	{"sc", -inf, +inf}, // Cin(±inf) = +inf
-	{"sc", nan, nan},
+	{"sc", -Inf, +Inf}, // Cin(±Inf) = +Inf
+	{"sc", NaN, NaN},
 }
 
 func TestCin(t *testing.T) { testutil.Test(t, tolCin, casesCin, Cin) }

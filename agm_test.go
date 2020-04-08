@@ -12,7 +12,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolAGM = 1 * macheps
+var tolAGM = 1 * Macheps
 
 var casesAGM = []struct {
 	Label         string
@@ -30,11 +30,11 @@ var casesAGM = []struct {
 	{"sc", 0, 0, 0},
 	{"sc", 1, 1, 1},
 	{"sc", 0, -1, 0},
-	{"sc", +inf, +inf, +inf},
+	{"sc", +Inf, +Inf, +Inf},
 	{"sc", math.Pi, math.Pi, math.Pi},
-	{"sc", +inf, 0, nan},
-	{"sc", 1, -1, nan},
-	{"sc", nan, 1, nan},
+	{"sc", +Inf, 0, NaN},
+	{"sc", 1, -1, NaN},
+	{"sc", NaN, 1, NaN},
 }
 
 func TestAGM(t *testing.T) { testutil.Test(t, tolAGM, casesAGM, AGM) }

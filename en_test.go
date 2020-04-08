@@ -12,7 +12,7 @@ import (
 	"scientificgo.org/testutil"
 )
 
-var tolEn = 4 * macheps
+const tolEn = 4 * Macheps
 
 var casesEn = []struct {
 	Label    string
@@ -59,14 +59,14 @@ var casesEn = []struct {
 	{"sc", 0, -1, -math.E},
 	{"sc", 5, 0, 0.25},
 
-	{"sc", 1, +inf, 0},
+	{"sc", 1, +Inf, 0},
 	{"sc", 1, -1, -1.8951178163559368},
-	{"sc", 1, 0, +inf},
-	{"sc", 1, -720, -inf},
-	{"sc", 1, -100000, -inf},
-	{"sc", 2, -1, nan},
-	{"sc", -1, 2, nan},
-	{"sc", 1, nan, nan},
+	{"sc", 1, 0, +Inf},
+	{"sc", 1, -720, -Inf},
+	{"sc", 1, -100000, -Inf},
+	{"sc", 2, -1, NaN},
+	{"sc", -1, 2, NaN},
+	{"sc", 1, NaN, NaN},
 }
 
 func TestEn(t *testing.T) {

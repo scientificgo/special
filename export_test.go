@@ -2,14 +2,13 @@
 // Use of this source code is governed by the BSD 3-Clause
 // license that can be found in the LICENSE file.
 
-package special_test
+package special
 
-import "math"
+const Macheps = macheps
 
 var (
-	nan       = math.NaN()
-	inf       = math.Inf(1)
-	minusZero = -1 / inf
+	NaN = nan
+	Inf = inf
 
-	macheps = math.Nextafter(1, 2) - 1
+	NegativeZero = negativeZero
 )
