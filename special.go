@@ -22,27 +22,20 @@ var (
 )
 
 // isInt returns true if x is exactly zero or within ε of a non-zero integer.
-func isInt(x float64) (int float64, is bool) {
+func isInt(x float64) bool {
 	r, f := math.Modf(x)
-	int = r
 	if f < 0 {
 		r = -r
 		f = -f
 	}
 	if r+macheps < 1 {
-		is = f == 0
-		return
+		return f == 0
 	}
-	is = f < macheps || f > 1-macheps
-	return
+	return f < macheps || f > 1-macheps
 }
 
 // isNonPosInt returns true if x is a finite non-positive integer.
-func isNonPosInt(x float64) (int float64, is bool) {
-	int, is = isInt(x)
-	is = is && int <= 0
-	return
-}
+func isNonPosInt(x float64) bool { return x <= 0 && isInt(x) }
 
 // chebeval evaluates the Chebyshev series defined by
 //               n-1

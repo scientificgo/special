@@ -19,10 +19,8 @@ func Digamma(x float64) float64 {
 	switch {
 	case math.IsInf(x, -1) || math.IsNaN(x):
 		return nan
-	case x <= 0:
-		if _, isint := isNonPosInt(x); isint {
-			return nan
-		}
+	case isNonPosInt(x):
+		return nan
 	case math.IsInf(x, 1):
 		return x
 	case x == 1:

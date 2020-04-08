@@ -21,9 +21,9 @@ import "math"
 //  SinPi(±Inf) = NaN
 //
 func SinPi(x float64) float64 {
-	if i, isint := isInt(x); isint {
-		if i == 0 { // correctly signed zero
-			return i
+	if isInt(x) {
+		if x == 0 { // correctly signed zero
+			return x
 		}
 		return 0
 	}
@@ -38,7 +38,7 @@ func SinPi(x float64) float64 {
 //  CosPi(±Inf) = NaN
 //
 func CosPi(x float64) float64 {
-	if _, isint := isInt(x + 0.5); isint {
+	if isInt(x + 0.5) {
 		return 0
 	}
 	return math.Cos(math.Pi * math.Remainder(x, 2))
@@ -53,19 +53,19 @@ func CosPi(x float64) float64 {
 //  SincosPi(±Inf) = NaN, NaN
 //
 func SincosPi(x float64) (sin, cos float64) {
-	if i, isint := isInt(x); isint {
+	if isInt(x) {
 		cos = -1
-		if math.Mod(i, 2) == 0 { // even
+		if math.Mod(x, 2) == 0 { // even
 			cos = 1
 		}
-		if i == 0 { // correctly signed zero
-			sin = i
+		if x == 0 { // correctly signed zero
+			sin = x
 		}
 		return
 	}
-	if i, isint := isInt(x + 0.5); isint {
+	if isInt(x + 0.5) {
 		sin = 1
-		if math.Mod(i, 2) == 0 { // even
+		if math.Mod(x+0.5, 2) == 0 { // even
 			sin = -sin
 		}
 		return
@@ -83,13 +83,13 @@ func SincosPi(x float64) (sin, cos float64) {
 //  TanPi(±Inf) = NaN
 //
 func TanPi(x float64) float64 {
-	if i, isint := isInt(x); isint {
-		if i == 0 { // correctly signed zero
-			return i
+	if isInt(x) {
+		if x == 0 { // correctly signed zero
+			return x
 		}
 		return 0
 	}
-	if _, isint := isInt(x + 0.5); isint {
+	if isInt(x + 0.5) {
 		return +inf
 	}
 	return math.Tan(math.Pi * math.Remainder(x, 1))
@@ -104,13 +104,13 @@ func TanPi(x float64) float64 {
 //  CotPi(±Inf) = NaN
 //
 func CotPi(x float64) float64 {
-	if i, isint := isInt(x); isint {
-		if i == 0 { // correctly signed infinity
-			return math.Copysign(inf, i)
+	if isInt(x) {
+		if x == 0 { // correctly signed infinity
+			return math.Copysign(inf, x)
 		}
 		return +inf
 	}
-	if _, isint := isInt(x + 0.5); isint {
+	if isInt(x + 0.5) {
 		return 0
 	}
 

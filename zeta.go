@@ -26,10 +26,8 @@ func Zeta(x float64) float64 {
 		return nan
 	case math.IsInf(x, 1):
 		return 1
-	case x < 0:
-		if i, ok := isNonPosInt(x); ok && math.Mod(i, 2) == 0 {
-			return 0
-		}
+	case isNonPosInt(x) && math.Mod(x, 2) == 0:
+		return 0
 	}
 
 	r := 1.

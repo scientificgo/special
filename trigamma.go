@@ -15,10 +15,10 @@ import "math"
 //
 func Trigamma(x float64) float64 {
 	// Trigamma(-2k) = NaN for integer k ≥ 0
-	switch _, npi := isNonPosInt(x); {
+	switch {
 	case math.IsInf(x, -1) || math.IsNaN(x):
 		return nan
-	case npi:
+	case isNonPosInt(x):
 		return +inf
 	case math.IsInf(x, 1):
 		return 0
