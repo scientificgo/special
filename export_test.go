@@ -4,11 +4,24 @@
 
 package special
 
+// This file contains useful variables and constants used
+// during testing. It also contains some non-exported
+// functions that require testing and/or benchmarking.
+
+// constants
 const Macheps = macheps
 
+// variables
 var (
-	NaN = nan
-	Inf = inf
-
+	NaN          = nan
+	Inf          = inf
 	NegativeZero = negativeZero
+)
+
+// functions
+var (
+	Hyp1F1 = hyp1F1
+
+	Igammalcf = igammalcf
+	Igammaucf = igammaucf
 )
