@@ -21,6 +21,7 @@ var (
 // functions
 var (
 	Hyp1F1 = hyp1F1
+	Hyp2F0 = hyp2F0
 
 	Igammalcf = igammalcf
 	Igammaucf = igammaucf

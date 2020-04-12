@@ -37,5 +37,5 @@ func Li(x float64) float64 {
 	//         ln(x) k=0 ln(x)**k
 
 	y := 1 / l
-	return x * y * factorialseries(y)
+	return x * y * hyp2F0(1, 1, y)
 }

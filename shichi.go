@@ -137,7 +137,7 @@ func Shichi(x float64) (shi, chi float64) {
 
 		y := 1 / x
 		z := math.Exp(x / 2) // use e**x = (e**(x/2))**2 to avoid overflows
-		shi = factorialseries(y) / 2 * y * z * z
+		shi = hyp2F0(1, 1, y) / 2 * y * z * z
 		chi = shi // equal to machine precision
 		goto done
 	}

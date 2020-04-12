@@ -76,25 +76,3 @@ func poleval(x float64, cs ...float64) (p float64) {
 	}
 	return
 }
-
-// factorialseries returns the series
-//      n
-//  y = Σ k! * x**k
-//     k=0
-// where n is the smallest positive integer such that
-// |(n+1) * x| > 1 or |n! * x**n / y| < ε, where ε is
-// the machine precision.
-//
-// This cutoff is necessary since the series is divergent for all
-// x in the limit n → ∞.
-func factorialseries(x float64) float64 {
-	s := 0.
-
-	for i, t, ti := 1, 1., x; math.Abs(ti) < 1 && math.Abs(t/s) > macheps; i++ {
-		t *= ti
-		s += t
-		ti = x * float64(i+1)
-	}
-
-	return s + 1
-}

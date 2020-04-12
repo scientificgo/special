@@ -45,7 +45,7 @@ func Ei(x float64) float64 {
 
 		y := 1 / x
 		e := math.Exp(x / 2) // avoid overflow with e**x = (e**x/2)**2
-		return y * factorialseries(y) * e * e
+		return y * hyp2F0(1, 1, y) * e * e
 	}
 
 	// power series
