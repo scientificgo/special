@@ -30,7 +30,9 @@ func hyp1F1(a, b, x float64) float64 {
 		}
 	}
 
-	if x < -1 && !isNonPosInt(a) {
+	ispoly := isNonPosInt(a)
+
+	if x < -1 && !ispoly {
 		return math.Exp(x) * hyp1F1(b-a, b, -x)
 	}
 
@@ -41,7 +43,7 @@ func hyp1F1(a, b, x float64) float64 {
 	t := x * (a / b)
 	s := t
 	r := 0.
-	for i := 2; math.Abs(t/s) > macheps; i++ {
+	for i := 2; math.Abs(t/s) > macheps || (ispoly && a != 0); i++ {
 		a++
 		b++
 		t *= x * a / (b * float64(i))
