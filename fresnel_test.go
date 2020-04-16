@@ -11,9 +11,9 @@ import (
 	"scientificgo.org/testutil"
 )
 
-const tolFresnel = 1 * Macheps
+const tolFresnelSC = 1 * Macheps
 
-var casesFresnel = []struct {
+var casesFresnelSC = []struct {
 	Label          string
 	In, Out1, Out2 float64
 }{
@@ -58,15 +58,16 @@ var casesFresnel = []struct {
 	{"", NegativeZero, NegativeZero, NegativeZero},
 	{"", +Inf, 0.5, 0.5},
 	{"", -Inf, -0.5, -0.5},
+	{"", NaN, NaN, NaN},
 }
 
-func TestFresnel(t *testing.T) { testutil.Test(t, tolFresnel, casesFresnel, Fresnel) }
+func TestFresnelSC(t *testing.T) { testutil.Test(t, tolFresnelSC, casesFresnelSC, FresnelSC) }
 
-func BenchmarkFresnel(b *testing.B) {
-	for _, c := range casesFresnel {
+func BenchmarkFresnelSC(b *testing.B) {
+	for _, c := range casesFresnelSC {
 		b.Run(c.Label, func(b *testing.B) {
 			for i := 0; i < b.N; i++ {
-				_, _ = Fresnel(c.In)
+				_, _ = FresnelSC(c.In)
 			}
 		})
 	}

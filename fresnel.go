@@ -162,13 +162,13 @@ var _gd = []float64{
 	1.00000000000000000000E0,
 }
 
-// Fresnel returns the Fresnel integrals S(x) and C(x).
+// FresnelSC returns the Fresnel integrals S(x) and C(x).
 //
 // Special cases are:
-//  Fresnel(±0) = ±0
-//  Fresnel(±Inf) = 0.5, 0.5
+//  FresnelSC(±0) = ±0
+//  FresnelSC(±Inf) = ±0.5, ±0.5
 //
-func Fresnel(x float64) (s, c float64) {
+func FresnelSC(x float64) (s, c float64) {
 	switch {
 	case math.IsNaN(x):
 		s = x
