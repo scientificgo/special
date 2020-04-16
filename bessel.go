@@ -81,21 +81,3 @@ func In(n, x float64) float64 {
 	}
 	return math.Pow(0.5*x, n) / math.Gamma(1+n) * hyp0F1(1+n, 0.25*x*x)
 }
-
-// stirling evaluates the first six terms of the series
-// in Stirling's approximation for the Gamma function
-// multiplied by sqrt(2*π).
-//
-//  Gamma(x+1) ~ (x/e)**x * sqrt(x) * stirling(x)
-//
-func stirling(x float64) float64 {
-	_stirling := []float64{
-		1.,
-		8.33333333333482257126e-02,
-		3.47222221605458667310e-03,
-		-2.68132617805781232825e-03,
-		-2.29549961613378126380e-04,
-		7.87311395793093628397e-04,
-	}
-	return Sqrt2Pi * poleval(1/x, _stirling...)
-}

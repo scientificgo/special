@@ -10,9 +10,11 @@ import "math"
 
 // Mathematical constants.
 const (
-	Euler   = 0.577215664901532860606512090082402431042159335939923598805767234884867726777664670936947063291746749 // https://oeis.org/A001620
-	LnPi    = 1.144729885849400174143427351353058711647294812915311571513623071472137769884826079783623270275489707 // https://oeis.org/A053510
-	LnPhi   = 0.481211825059603447497758913424368423135184334385660519661018168840163867608221774412009429122723474 // https://oeis.org/A002390
+	Euler = 0.577215664901532860606512090082402431042159335939923598805767234884867726777664670936947063291746749 // https://oeis.org/A001620
+
+	LnPi  = 1.144729885849400174143427351353058711647294812915311571513623071472137769884826079783623270275489707 // https://oeis.org/A053510
+	LnPhi = 0.481211825059603447497758913424368423135184334385660519661018168840163867608221774412009429122723474 // https://oeis.org/A002390
+
 	Sqrt2Pi = 2.506628274631000502415765284811045253006986740609938316629923576342293654607841974946595838378057266 // https://oeis.org/A019727
 )
 
@@ -22,58 +24,5 @@ var (
 	nan = math.NaN()
 	inf = math.Inf(1)
 
-	negativeZero = -1 / inf
+	negativeZero = math.Copysign(0, -1)
 )
-
-// isInt returns true if x is exactly zero or within ε of a non-zero integer.
-func isInt(x float64) bool {
-	r, f := math.Modf(x)
-	if f < 0 {
-		r = -r
-		f = -f
-	}
-	if r+macheps < 1 {
-		return f == 0
-	}
-	return f < macheps || f > 1-macheps
-}
-
-// isNonPosInt returns true if x is a finite non-positive integer.
-func isNonPosInt(x float64) bool { return x <= 0 && isInt(x) }
-
-// chebeval evaluates the Chebyshev series defined by
-//               n-1
-//  y = cs[0]/2 + Σ cs[k] * T_k(x)
-//               k=1
-// where T_k(x) is the k-th Chebyshev polynomial of the
-// first kind of x.
-//
-// Since the Chebyshev polynomials are only defined over
-// (-1, 1), x must be transformed into that domain
-// before calling this function. The transformation required
-// depends on the interval used to calculate the coefficients.
-//
-// If the coefficients were calculated for (a, b):
-//  x' = (2*x - b - a) / (b - a)
-//
-// If the coefficients were calculated for (1/b, 1/a):
-//  x' = (2*a*b/x - b - a) / (b - a)
-//
-func chebeval(x float64, cs ...float64) float64 {
-	var b0, b1, b2 float64
-	n := len(cs)
-	b0 = cs[n-1]
-	for i := n - 2; i >= 0; i-- {
-		b1, b2 = b0, b1
-		b0 = cs[i] + 2*x*b1 - b2
-	}
-	return (b0 - b2) / 2
-}
-
-// poleval evaluates the polynomial cs[0] + cs[1] * x + ... + cs[n] * x**n
-func poleval(x float64, cs ...float64) (p float64) {
-	for i := len(cs) - 1; i >= 0; i-- {
-		p = cs[i] + p*x
-	}
-	return
-}
