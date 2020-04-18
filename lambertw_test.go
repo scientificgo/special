@@ -90,9 +90,9 @@ func TestW0(t *testing.T) {
 	for _, c := range casesW0 {
 		t.Run(c.Label, func(t *testing.T) {
 			w0 := W0(c.In)
-			if ok := testutil.Equal(w0, c.Out, tolW0); !ok {
+			if res := testutil.Equal(w0, c.Out, tolW0); !res.Ok {
 				x0 := math.Exp(w0) * w0
-				if ok = testutil.Equal(x0, c.In, tolW0); !ok {
+				if res = testutil.Equal(x0, c.In, tolW0); !res.Ok {
 					t.Errorf("Error: Got %v, want %v.", w0, c.Out)
 				}
 			}
@@ -151,9 +151,9 @@ func TestW1(t *testing.T) {
 	for _, c := range casesW1 {
 		t.Run(c.Label, func(t *testing.T) {
 			w1 := W1(c.In)
-			if ok := testutil.Equal(w1, c.Out, tolW1); !ok {
+			if res := testutil.Equal(w1, c.Out, tolW1); !res.Ok {
 				x1 := math.Exp(w1) * w1
-				if ok = testutil.Equal(x1, c.In, tolW1); !ok {
+				if res = testutil.Equal(x1, c.In, tolW1); !res.Ok {
 					t.Errorf("Error: Got %v, want %v.", w1, c.Out)
 				}
 			}
