@@ -18,7 +18,7 @@ func stirling(x float64) float64 {
 		-2.68132617805781232825e-03,
 		-2.29549961613378126380e-04,
 		7.87311395793093628397e-04,
-		6.97281375836585777429e-05,
+		// 6.97281375836585777429e-05, // does not seem to improve accuracy
 	}
 	return Sqrt2Pi * poleval(1/x, _stirling...)
 }

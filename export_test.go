@@ -20,6 +20,8 @@ var (
 
 // functions
 var (
+	Stirling = stirling
+
 	Hyp0F1 = hyp0F1
 	Hyp1F1 = hyp1F1
 	Hyp2F0 = hyp2F0
