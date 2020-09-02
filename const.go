@@ -1,4 +1,4 @@
-// Copyright (c) 2018, Jack Parkinson. All rights reserved.
+// Copyright (c) 2020, Jack Parkinson. All rights reserved.
 // Use of this source code is governed by the BSD 3-Clause
 // license that can be found in the LICENSE file.
 
@@ -6,10 +6,5 @@ package special
 
 // Mathematical constants.
 const (
-	Cahen      = 6434105462883380261822543077575647632865878602682395059870309203 // https://oeis.org/A118227
-	Catalan    = 0.91596559417721901505460351493238411077414937428167213426649811 // https://oeis.org/A006752
 	EulerGamma = 0.57721566490153286060651209008240243104215933593992359880576723 // https://oeis.org/A001620
-	Glaisher   = 1.28242712910062263687534256886979172776768892732500119206374002 // https://oeis.org/A074962
-	Omega      = 0.56714329040978387299996866221035554975381578718651250813513107 // https://oeis.org/A030178
-	Plastic    = 1.32471795724474602596090885447809734073440405690173336453401505 // https://oeis.org/A060006
 )

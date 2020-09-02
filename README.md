@@ -3,10 +3,9 @@ layout: default
 title: special
 ---
 
-[![GoDoc](https://godoc.org/scientificgo.org/special?status.svg)](https://godoc.org/scientificgo.org/special)
-[![Go Report Card](https://goreportcard.com/badge/github.com/scientificgo/special)](https://goreportcard.com/report/github.com/scientificgo/special)
+[![PkgGoDev](https://pkg.go.dev/badge/scientificgo.org/special)](https://pkg.go.dev/scientificgo.org/special)
 [![Coverage](https://codecov.io/gh/scientificgo/special/branch/master/graph/badge.svg)](https://codecov.io/gh/scientificgo/special)
-[![Build Status](https://travis-ci.org/scientificgo/special.svg?branch=master)](https://travis-ci.org/scientificgo/special)
+[![Go Report Card](https://goreportcard.com/badge/github.com/scientificgo/special)](https://goreportcard.com/report/github.com/scientificgo/special)
 
 # special
 

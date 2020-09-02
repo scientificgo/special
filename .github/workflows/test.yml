@@ -1,0 +1,28 @@
+name: Go Test
+on: [push, pull_request]
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        go-version: [1.14.x, 1.15.x]
+    
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: ${{ matrix.go-verion }}
+
+    - name: Test
+      run: go test ./... -coverprofile=coverage.txt
+
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v1
+      with:
+        file: coverage.txt
+        fail_ci_if_error: true
