@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesEta = []struct {
@@ -26,4 +25,14 @@ var casesEta = []struct {
 	{"", 1.1, 0.7088088499305867},
 }
 
-func TestEta(t *testing.T) { testutil.Test(t, tol, casesEta, Eta) }
+func TestEta(t *testing.T) {
+	for i, c := range casesEta {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Eta(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}

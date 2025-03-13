@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesPoch = []struct {
@@ -55,5 +54,13 @@ var casesPoch = []struct {
 }
 
 func TestPoch(t *testing.T) {
-	testutil.Test(t, tol, casesPoch, Poch)
+	for i, c := range casesPoch {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Poch(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }

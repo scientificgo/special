@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesFibonacci = []struct {
@@ -31,5 +30,13 @@ var casesFibonacci = []struct {
 }
 
 func TestFibonacci(t *testing.T) {
-	testutil.Test(t, tol, casesFibonacci, Fibonacci)
+	for i, c := range casesFibonacci {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Fibonacci(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }

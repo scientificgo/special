@@ -6,18 +6,18 @@ package special
 
 import "math"
 
-// The implementation given here is based on the details given in:
+// The following implementation is based on:
 // Darko Veberic, "Lambert W Function for Applications in Physics",
 // Computer Physics Communications 183 (2012) 2622-2628, arXiv:1209.0735v2
 
 // LambertW returns the real branches of the
 // Lambert W function, implicitly defined by
 //
-//  W(x) Exp(W(x)) = x
+//	W(x) Exp(W(x)) = x
 //
 // or, equivalently, as the inverse of the function
 //
-//  f(x) = x Exp(x)
+//	f(x) = x Exp(x)
 //
 // where Exp is the exponential function. The principal branch (k=0) is defined on
 // x ≥ -1/e and the secondary branch (k=-1) is defined over -1/e ≤ x < 0.

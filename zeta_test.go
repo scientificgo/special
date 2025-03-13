@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesZeta = []struct {
@@ -48,7 +47,17 @@ var casesZeta = []struct {
 	{"", -3.2, 0.007011972077091051},
 }
 
-func TestZeta(t *testing.T) { testutil.Test(t, tol, casesZeta, Zeta) }
+func TestZeta(t *testing.T) {
+	for i, c := range casesZeta {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Zeta(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkZeta(b *testing.B) {

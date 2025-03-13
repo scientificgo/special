@@ -7,13 +7,12 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesDigamma = []struct {
 	Label   string
-	In, Out interface{}
+	In, Out float64
 }{
 	{"", nan, nan},
 	{"", -inf, nan},
@@ -28,7 +27,17 @@ var casesDigamma = []struct {
 	{"", -4.9, -7.981008564556067},
 }
 
-func TestDigamma(t *testing.T) { testutil.Test(t, tol, casesDigamma, Digamma) }
+func TestDigamma(t *testing.T) {
+	for i, c := range casesDigamma {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Digamma(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkDigamma(b *testing.B) {

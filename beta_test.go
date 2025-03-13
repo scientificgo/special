@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesBeta = []struct {
@@ -38,5 +37,13 @@ var casesBeta = []struct {
 }
 
 func TestBeta(t *testing.T) {
-	testutil.Test(t, tol, casesBeta, Beta)
+	for i, c := range casesBeta {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Beta(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }

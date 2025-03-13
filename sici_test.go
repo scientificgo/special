@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesSi = []struct {
@@ -32,7 +31,15 @@ var casesSi = []struct {
 }
 
 func TestSi(t *testing.T) {
-	testutil.Test(t, tol, casesSi, Si)
+	for i, c := range casesSi {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Si(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*
@@ -57,7 +64,15 @@ var casesCi = []struct {
 }
 
 func TestCi(t *testing.T) {
-	testutil.Test(t, tol, casesCi, Ci)
+	for i, c := range casesCi {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Ci(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*
@@ -81,7 +96,15 @@ var casesCin = []struct {
 }
 
 func TestCin(t *testing.T) {
-	testutil.Test(t, tol, casesCin, Cin)
+	for i, c := range casesCin {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Cin(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*

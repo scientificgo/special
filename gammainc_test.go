@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesGammaIncU = []struct {
@@ -61,13 +60,41 @@ var casesGammaIncIdentity = []struct {
 	{"", 150.5, 1.943e+07, 4.661072627097374e+261},
 }
 
-func TestGammaIncU(t *testing.T) { testutil.Test(t, tol, casesGammaIncU, GammaIncU) }
-func TestGammaIncL(t *testing.T) { testutil.Test(t, tol, casesGammaIncL, GammaIncL) }
+func TestGammaIncU(t *testing.T) {
+	for i, c := range casesGammaIncU {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := GammaIncU(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
+func TestGammaIncL(t *testing.T) {
+	for i, c := range casesGammaIncL {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := GammaIncL(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 func TestGammaIncIdentity(t *testing.T) {
 	identity := func(a, x float64) float64 {
 		return GammaIncU(a, x) + GammaIncL(a, x)
 	}
-	testutil.Test(t, tol, casesGammaIncIdentity, identity)
+	for i, c := range casesGammaIncIdentity {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := identity(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*

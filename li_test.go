@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesLi = []struct {
@@ -33,7 +32,15 @@ var casesLi = []struct {
 }
 
 func TestLi(t *testing.T) {
-	testutil.Test(t, tol, casesLi, Li)
+	for i, c := range casesLi {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Li(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*

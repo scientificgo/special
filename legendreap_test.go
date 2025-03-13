@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesLegendreAP = []struct {
@@ -26,7 +25,17 @@ var casesLegendreAP = []struct {
 	{"", -154, 11, 1e-5, 7.1211274720051580808679401818532702913164641927292374e+22},
 }
 
-func TestLegendreAP(t *testing.T) { testutil.Test(t, tol, casesLegendreAP, LegendreAP) }
+func TestLegendreAP(t *testing.T) {
+	for i, c := range casesLegendreAP {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := LegendreAP(c.In1, c.In2, c.In3)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkLegendreAP(b *testing.B) {

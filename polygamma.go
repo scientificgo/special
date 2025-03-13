@@ -8,7 +8,7 @@ import "math"
 
 // Digamma returns the first logarithmic derivative of the Gamma function, defined by
 //
-//  Digamma(x) = d/dx Lgamma(x)
+//	Digamma(x) = d/dx Lgamma(x)
 //
 // See http://mathworld.wolfram.com/DigammaFunction.html for more information.
 func Digamma(x float64) float64 {
@@ -58,7 +58,7 @@ func Digamma(x float64) float64 {
 // Trigamma returns the logarithmic second derivative of Gamma(x), or, equivalently,
 // the first derivative of the Digamma function.
 //
-//  Trigamma(x) = d/dx Digamma(x)
+//	Trigamma(x) = d/dx Digamma(x)
 //
 // See http://mathworld.wolfram.com/TrigammaFunction.html for more information.
 func Trigamma(x float64) float64 {
@@ -108,7 +108,7 @@ func Trigamma(x float64) float64 {
 
 // Polygamma returns the nth derivative of the Digamma function.
 //
-//  Polygamma(n, x) = (d/dx)**n Digamma(x)
+//	Polygamma(n, x) = (d/dx)**n Digamma(x)
 //
 // See http://mathworld.wolfram.com/PolygammaFunction.html for more information.
 func Polygamma(n int, x float64) float64 {
@@ -176,9 +176,10 @@ func Polygamma(n int, x float64) float64 {
 }
 
 // scaledcotderiv returns π (d/dx)**n cot(πx) / n! using the derivative of Euler's partial fraction expansion
-//                                          ∞
-//  π (d/dx)**n cot(πx) / n! = 1/x**(n+1) + ∑ 1/(x+k)**(n+1) + 1/(x-k)**(n+1)
-//                                         k=1
+//
+//	                                        ∞
+//	π (d/dx)**n cot(πx) / n! = 1/x**(n+1) + ∑ 1/(x+k)**(n+1) + 1/(x-k)**(n+1)
+//	                                       k=1
 func scaledcotderiv(n int, x float64) float64 {
 	// s = (-1)**n
 	s := 1 - 2*(n&1)
@@ -270,9 +271,10 @@ func polygamman(n int, lnfac, x float64) float64 {
 }
 
 // polygammanseries returns polygamma(n, x) using the series definition
-//                       ∞
-//  polygamma(n, x) = n! ∑ (k+x)**(-n-1)
-//                      k=0
+//
+//	                     ∞
+//	polygamma(n, x) = n! ∑ (k+x)**(-n-1)
+//	                    k=0
 func polygammanseries(n int, lnfac, x float64) float64 {
 	const (
 		maxiter = 200
@@ -446,13 +448,13 @@ func polygamma5(x float64) float64 {
 
 // Harmonic returns the harmonic numbers, defined for integer n by
 //
-//                n
-//  Harmonic(n) = ∑ 1/k
-//               k=1
+//	              n
+//	Harmonic(n) = ∑ 1/k
+//	             k=1
 //
 // and extended to non-integer x by
 //
-//  Harmonic(x) = EulerGamma + Digamma(x+1)
+//	Harmonic(x) = EulerGamma + Digamma(x+1)
 //
 // where Digamma is the logarithmic derivative of the Gamma function.
 //

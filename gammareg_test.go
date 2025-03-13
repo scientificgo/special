@@ -3,8 +3,8 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
+	"github.com/scientificgo/testutil"
 )
 
 var casesGammaRegQ = []struct {

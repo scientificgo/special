@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesLgammaRatio = []struct {
@@ -52,7 +51,17 @@ var casesLgammaRatio = []struct {
 	{"", []float64{-3.056675e-05}, []float64{2.99486e-05}, -0.020395307538563508, -1},
 }
 
-func TestLgammaRatio(t *testing.T) { testutil.Test(t, tol, casesLgammaRatio, LgammaRatio) }
+func TestLgammaRatio(t *testing.T) {
+	for i, c := range casesLgammaRatio {
+		t.Run(c.Label, func(tt *testing.T) {
+			res1, res2 := LgammaRatio(c.In1, c.In2)
+			ok := equalFloat64(res1, c.Out1) && res2 == c.Out2
+			if !ok {
+				tt.Errorf("[%v]: Got (%v, %v), want (%v, %v)", i, res1, res2, c.Out1, c.Out2)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkLgammaRatio(b *testing.B) {

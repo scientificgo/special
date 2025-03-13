@@ -9,18 +9,19 @@ import "math"
 // GammaRegP returns the regularised lower incomplete gamma function,
 // defined by
 //
-//                                   x
-//  GammaRegP(a, x) = [1 / Gamma(a)] ∫ dt Exp(-t) * t**(a-1)
-//                                  t=0
+//	                                 x
+//	GammaRegP(a, x) = [1 / Gamma(a)] ∫ dt Exp(-t) * t**(a-1)
+//	                                t=0
 //
 // The regularised lower incomplete gamma function has a series representation
-//                                 ∞
-//  GammaRegP(a, x) = Exp(-x) a**x ∑ x**k / Gamma(a+k+1)
-//                                k=0
+//
+//	                               ∞
+//	GammaRegP(a, x) = Exp(-x) a**x ∑ x**k / Gamma(a+k+1)
+//	                              k=0
 //
 // and also satisfies the identity
 //
-//  GammaRegP(a, x) + GammaRegQ(a, x) = 1
+//	GammaRegP(a, x) + GammaRegQ(a, x) = 1
 //
 // where GammaRegQ is the regularised upper incomplete gamma function.
 //
@@ -64,13 +65,13 @@ func GammaRegP(a, x float64) float64 {
 // GammaRegQ returns the regularised upper incomplete gamma function,
 // defined by
 //
-//                                   ∞
-//  GammaRegQ(a, x) = [1 / Gamma(a)] ∫ dt Exp(-t) * t**(a-1)
-//                                  t=x
+//	                                 ∞
+//	GammaRegQ(a, x) = [1 / Gamma(a)] ∫ dt Exp(-t) * t**(a-1)
+//	                                t=x
 //
 // GammaRegQ also satisfies the identity
 //
-//  GammaRegP(a, x) + GammaRegQ(a, x) = 1
+//	GammaRegP(a, x) + GammaRegQ(a, x) = 1
 //
 // where GammaRegP is the regularised lower incomplete gamma function.
 //
@@ -171,13 +172,13 @@ func cfgammaQdepth(a, x float64) int {
 // GammaIncL returns the lower incomplete gamma function,
 // defined by
 //
-//                    x
-//  GammaIncL(a, x) = ∫ dt Exp(-t) * t**(a-1)
-//                   t=0
+//	                  x
+//	GammaIncL(a, x) = ∫ dt Exp(-t) * t**(a-1)
+//	                 t=0
 //
 // GammaIncL also satisfies the identity
 //
-//  GammaIncL(a, x) + GammaIncU(a, x) = Gamma(a)
+//	GammaIncL(a, x) + GammaIncU(a, x) = Gamma(a)
 //
 // where GammaIncU is the upper incomplete gamma function.
 //
@@ -196,13 +197,13 @@ func GammaIncL(a, x float64) float64 {
 // GammaIncU returns the lower incomplete gamma function,
 // defined by
 //
-//                    ∞
-//  GammaIncU(a, x) = ∫ dt Exp(-t) * t**(a-1)
-//                   t=x
+//	                  ∞
+//	GammaIncU(a, x) = ∫ dt Exp(-t) * t**(a-1)
+//	                 t=x
 //
 // GammaIncU also satisfies the identity
 //
-//  GammaIncL(a, x) + GammaIncU(a, x) = Gamma(a)
+//	GammaIncL(a, x) + GammaIncU(a, x) = Gamma(a)
 //
 // where GammaIncL is the lower incomplete gamma function.
 //

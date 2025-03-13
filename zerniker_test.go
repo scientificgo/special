@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesZernikeR = []struct {
@@ -22,7 +21,17 @@ var casesZernikeR = []struct {
 	{"", 43, 41, 53.5, 8.9646400010525796235939120335742702428482112823125695e+75},
 }
 
-func TestZernikeR(t *testing.T) { testutil.Test(t, tol, casesZernikeR, ZernikeR) }
+func TestZernikeR(t *testing.T) {
+	for i, c := range casesZernikeR {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := ZernikeR(c.In1, c.In2, c.In3)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkZernikeR(b *testing.B) {

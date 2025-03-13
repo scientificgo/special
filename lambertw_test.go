@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesLambertW = []struct {
@@ -35,7 +34,15 @@ var casesLambertW = []struct {
 }
 
 func TestLambertW(t *testing.T) {
-	testutil.Test(t, tol, casesLambertW, LambertW)
+	for i, c := range casesLambertW {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := LambertW(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*

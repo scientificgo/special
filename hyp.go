@@ -8,16 +8,16 @@ import "math"
 
 // HypPFQ returns the type-(p,q) generalised hypergeometric function, defined by
 //
-//                   ∞            p-1         q-1
-//    pFq(a; b; x) = ∑ x**k / k! * ∏ (a[i])_k / ∏ (b[j])_k
-//                  k=0           i=0         j=0
+//	               ∞            p-1         q-1
+//	pFq(a; b; x) = ∑ x**k / k! * ∏ (a[i])_k / ∏ (b[j])_k
+//	              k=0           i=0         j=0
 //
 // where a and b are length p and q respectively and (x)_k is the k-th Pochhammer
 // symbol of x. The function pFq is commonly denoted
 //
-//       | a[0], a[1], ..., a[p-1]    |
-//    pFq|                        ; x |
-//       | b[0], b[1], ..., b[q-1]    |
+//	   | a[0], a[1], ..., a[p-1]    |
+//	pFq|                        ; x |
+//	   | b[0], b[1], ..., b[q-1]    |
 //
 // for p, q ≥ 2.
 //

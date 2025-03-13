@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesLaguerreL = []struct {
@@ -25,7 +24,17 @@ var casesLaguerreL = []struct {
 	{"", 41, -4.3255, 4.31280964460014077797090383609544382702962848439229792e+09},
 }
 
-func TestLaguerreL(t *testing.T) { testutil.Test(t, tol, casesLaguerreL, LaguerreL) }
+func TestLaguerreL(t *testing.T) {
+	for i, c := range casesLaguerreL {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := LaguerreL(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkLaguerreL(b *testing.B) {

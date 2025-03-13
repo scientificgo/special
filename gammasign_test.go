@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesGammaSign = []struct {
@@ -25,7 +24,17 @@ var casesGammaSign = []struct {
 	{"", -2.0, 1},
 }
 
-func TestGammaSign(t *testing.T) { testutil.Test(t, tol, casesGammaSign, GammaSign) }
+func TestGammaSign(t *testing.T) {
+	for i, c := range casesGammaSign {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := GammaSign(c.In)
+			ok := res == c.Out
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkGammaSign(b *testing.B) {

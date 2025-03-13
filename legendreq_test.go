@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesLegendreQ = []struct {
@@ -25,7 +24,17 @@ var casesLegendreQ = []struct {
 	{"", 101, -0.10101, 0.082745695703743357501272084016026991789721245950554478861},
 }
 
-func TestLegendreQ(t *testing.T) { testutil.Test(t, tol, casesLegendreQ, LegendreQ) }
+func TestLegendreQ(t *testing.T) {
+	for i, c := range casesLegendreQ {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := LegendreQ(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkLegendreQ(b *testing.B) {

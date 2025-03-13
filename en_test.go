@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesEn = []struct {
@@ -75,7 +74,15 @@ var casesEn = []struct {
 }
 
 func TestEn(t *testing.T) {
-	testutil.Test(t, tol, casesEn, En)
+	for i, c := range casesEn {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := En(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*

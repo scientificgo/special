@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesSphericalHarmonicY = []struct {
@@ -25,7 +24,15 @@ var casesSphericalHarmonicY = []struct {
 }
 
 func TestSphericalHarmonicY(t *testing.T) {
-	testutil.Test(t, tol, casesSphericalHarmonicY, SphericalHarmonicY)
+	for i, c := range casesSphericalHarmonicY {
+		t.Run(c.Label, func(tt *testing.T) {
+			res1, res2 := SphericalHarmonicY(c.In1, c.In2, c.In3, c.In4)
+			ok := equalFloat64(res1, c.Out1) && equalFloat64(res2, c.Out2)
+			if !ok {
+				tt.Errorf("[%v]: Got (%v, %v), want (%v, %v)", i, res1, res2, c.Out1, c.Out2)
+			}
+		})
+	}
 }
 
 /*

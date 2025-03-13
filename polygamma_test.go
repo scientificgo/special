@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesPolygamma = []struct {
@@ -98,7 +97,17 @@ var casesPolygamma = []struct {
 	{"", 111, 1, 1.7629525510902446e+180},
 }
 
-func TestPolygamma(t *testing.T) { testutil.Test(t, tol, casesPolygamma, Polygamma) }
+func TestPolygamma(t *testing.T) {
+	for i, c := range casesPolygamma {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Polygamma(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkPolygamma(b *testing.B) {

@@ -1,2 +1,2 @@
-scientificgo.org/testutil v0.0.0 h1:y356DHRo0tAz9zIFmxlhZoKDlHPHaWW/DCm9k3PhIMA=
-scientificgo.org/testutil v0.0.0/go.mod h1:Go6R4b+9YkFocMo3H3vNQ7tjbrX9Rc12wal7NZjvPXg=
+github.com/scientificgo/testutil v0.1.8 h1:srQKpz8GuH7cI848WcgxCnRMAQYLIDIGlZPpzcF1Yuc=
+github.com/scientificgo/testutil v0.1.8/go.mod h1:b+ePXIXmBSOy9goYdThBLvMEwpbDHIzSBj9DUgkixo8=

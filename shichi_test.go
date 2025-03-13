@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesShi = []struct {
@@ -32,8 +31,28 @@ var casesChi = []struct {
 	{"", 20, 1.28078263320282943610629339487996274627064136343962909e+07},
 }
 
-func TestShi(t *testing.T) { testutil.Test(t, tol, casesShi, Shi) }
-func TestChi(t *testing.T) { testutil.Test(t, tol, casesChi, Chi) }
+func TestShi(t *testing.T) {
+	for i, c := range casesShi {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Shi(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
+func TestChi(t *testing.T) {
+	for i, c := range casesChi {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Chi(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkShi(b *testing.B) {

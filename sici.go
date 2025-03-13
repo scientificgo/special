@@ -12,9 +12,9 @@ import "math"
 
 // Si returns the sine integral, defined by
 //
-//          x                       ∞
-//  Si(x) = ∫ dt Sin(t) / t = π/2 - ∫ dt Sin(t) / t
-//	       t=0                     t=x
+//	         x                       ∞
+//	 Si(x) = ∫ dt Sin(t) / t = π/2 - ∫ dt Sin(t) / t
+//		       t=0                     t=x
 //
 // See http://mathworld.wolfram.com/SineIntegral.html for more information.
 func Si(x float64) float64 {
@@ -55,9 +55,9 @@ func Si(x float64) float64 {
 
 // Ci returns the cosine integral, defined by
 //
-//            ∞                              x
-//  Ci(x) = - ∫ dt Cos(t) / t = γ + Log(x) + ∫ dt (Cos(t) - 1) / t
-//           t=x                            t=0
+//	          ∞                              x
+//	Ci(x) = - ∫ dt Cos(t) / t = γ + Log(x) + ∫ dt (Cos(t) - 1) / t
+//	         t=x                            t=0
 //
 // where γ is the Euler-Mascheroni constant.
 //
@@ -77,9 +77,9 @@ func Ci(x float64) float64 {
 
 // Cin returns the secondary cosine integral, defined by
 //
-//           x
-//  Cin(x) = ∫ dt (1 - Cos(t)) / t = γ + Log(x) - Ci(x)
-//          t=0
+//	         x
+//	Cin(x) = ∫ dt (1 - Cos(t)) / t = γ + Log(x) - Ci(x)
+//	        t=0
 //
 // where γ is the Euler-Mascheroni constant and Ci is the primary
 // cosine integral.

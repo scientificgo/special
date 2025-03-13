@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesHermiteH = []struct {
@@ -24,7 +23,17 @@ var casesHermiteH = []struct {
 	{"", 43, 53.5, 1.56492249523929575819638209988328890215202268133174998288e+87},
 }
 
-func TestHermiteH(t *testing.T) { testutil.Test(t, tol, casesHermiteH, HermiteH) }
+func TestHermiteH(t *testing.T) {
+	for i, c := range casesHermiteH {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := HermiteH(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkHermiteH(b *testing.B) {

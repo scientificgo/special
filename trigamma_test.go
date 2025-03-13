@@ -7,13 +7,12 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesTrigamma = []struct {
 	Label   string
-	In, Out interface{}
+	In, Out float64
 }{
 	{"", nan, nan},
 	{"", -inf, nan},
@@ -29,7 +28,15 @@ var casesTrigamma = []struct {
 }
 
 func TestTrigamma(t *testing.T) {
-	testutil.Test(t, tol, casesTrigamma, Trigamma)
+	for i, c := range casesTrigamma {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Trigamma(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }
 
 /*

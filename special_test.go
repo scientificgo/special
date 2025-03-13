@@ -4,11 +4,43 @@
 
 package special_test
 
-import "math"
+import (
+	"math"
+)
 
-const tol = 10.0
+const tol = 1e-10
 
 var (
 	nan = math.NaN()
 	inf = math.Inf(1)
 )
+
+func equalFloat64(x float64, y float64) bool {
+	if math.IsNaN(y) {
+		return math.IsNaN(x)
+	}
+
+	if math.IsInf(y, 1) || math.IsInf(y, -1) {
+		return x == y
+	}
+
+	if y == 0 {
+		return math.Abs(x) < tol
+	}
+
+	return math.Abs((x-y)/y) < tol
+
+}
+
+// func equalComplex128(x complex128, y complex128) (bool, float64) {
+// 	if x == y || (cmplx.IsNaN(x) && cmplx.IsNaN(y)) {
+// 		return true, 0
+// 	}
+// 	if cmplx.Abs(y) == 0 {
+// 		diff := cmplx.Abs(x)
+// 		return diff < tol, diff
+// 	} else {
+// 		diff := cmplx.Abs((x - y) / y)
+// 		return diff < tol, diff
+// 	}
+// }

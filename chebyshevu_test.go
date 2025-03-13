@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesChebyshevU = []struct {
@@ -53,7 +52,17 @@ var casesChebyshevU = []struct {
 	{"", 67, 1.5e+04, 9.2709456349204110975326780846673773440744578594774910e+299},
 }
 
-func TestChebyshevU(t *testing.T) { testutil.Test(t, tol, casesChebyshevU, ChebyshevU) }
+func TestChebyshevU(t *testing.T) {
+	for i, c := range casesChebyshevU {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := ChebyshevU(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkChebyshevU(b *testing.B) {

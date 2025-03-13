@@ -1,5 +1,5 @@
-module scientificgo.org/special
+module github.com/scientificgo/special
 
-go 1.13
+go 1.14
 
-require scientificgo.org/testutil v0.0.0
+require github.com/scientificgo/testutil v0.1.8

@@ -7,8 +7,7 @@ package special_test
 import (
 	"testing"
 
-	. "scientificgo.org/special"
-	"scientificgo.org/testutil"
+	. "github.com/scientificgo/special"
 )
 
 var casesHarmonic = []struct {
@@ -23,4 +22,14 @@ var casesHarmonic = []struct {
 	{"", 50, 4.499205338329425},
 }
 
-func TestHarmonic(t *testing.T) { testutil.Test(t, tol, casesHarmonic, Harmonic) }
+func TestHarmonic(t *testing.T) {
+	for i, c := range casesHarmonic {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := Harmonic(c.In)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}

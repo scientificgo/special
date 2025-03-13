@@ -18,4 +18,4 @@ Package `special` provides special mathematical functions for [Go](https://golan
 
 ### Usage
 
-`import "scientificgo.org/special"`
+`import "github.com/scientificgo/special"`
