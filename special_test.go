@@ -29,18 +29,4 @@ func equalFloat64(x float64, y float64) bool {
 	}
 
 	return math.Abs((x-y)/y) < tol
-
 }
-
-// func equalComplex128(x complex128, y complex128) (bool, float64) {
-// 	if x == y || (cmplx.IsNaN(x) && cmplx.IsNaN(y)) {
-// 		return true, 0
-// 	}
-// 	if cmplx.Abs(y) == 0 {
-// 		diff := cmplx.Abs(x)
-// 		return diff < tol, diff
-// 	} else {
-// 		diff := cmplx.Abs((x - y) / y)
-// 		return diff < tol, diff
-// 	}
-// }

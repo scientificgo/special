@@ -8,12 +8,12 @@ import (
 	"testing"
 
 	. "github.com/scientificgo/special"
-	"github.com/scientificgo/testutil"
 )
 
 var casesGammaRatio = []struct {
-	Label         string
-	In1, In2, Out interface{}
+	Label    string
+	In1, In2 []float64
+	Out      float64
 }{
 	{"", []float64{18.3}, []float64{17.3}, 17.3},
 	{"", []float64{18.3}, []float64{19.3}, 0.054644808743169398907103825136612021857923497267759562841},
@@ -35,5 +35,13 @@ var casesGammaRatio = []struct {
 }
 
 func TestGammaRatio(t *testing.T) {
-	testutil.Test(t, tol, casesGammaRatio, GammaRatio)
+	for i, c := range casesGammaRatio {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := GammaRatio(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
 }

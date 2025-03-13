@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	. "github.com/scientificgo/special"
-	"github.com/scientificgo/testutil"
 )
 
 var casesGammaRegQ = []struct {
@@ -42,7 +41,17 @@ var casesGammaRegQ = []struct {
 	{"", -9.99, 1e-30, 1.7779299225269738e+303},
 }
 
-func TestGammaRegQ(t *testing.T) { testutil.Test(t, tol, casesGammaRegQ, GammaRegQ) }
+func TestGammaRegQ(t *testing.T) {
+	for i, c := range casesGammaRegQ {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := GammaRegQ(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkGammaRegQ(b *testing.B) {
@@ -102,7 +111,17 @@ var casesGammaRegP = []struct {
 	{"", -19.2, 0.00199, -1.561103376783299e+67},
 }
 
-func TestGammaRegP(t *testing.T) { testutil.Test(t, tol, casesGammaRegP, GammaRegP) }
+func TestGammaRegP(t *testing.T) {
+	for i, c := range casesGammaRegP {
+		t.Run(c.Label, func(tt *testing.T) {
+			res := GammaRegP(c.In1, c.In2)
+			ok := equalFloat64(res, c.Out)
+			if !ok {
+				tt.Errorf("[%v]: Got %v, want %v", i, res, c.Out)
+			}
+		})
+	}
+}
 
 /*
 func BenchmarkGammaRegP(b *testing.B) {
