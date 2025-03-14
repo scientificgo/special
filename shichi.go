@@ -31,7 +31,9 @@ func Shi(x float64) float64 {
 			s += a / k
 			k++
 		}
+
 		return float64(sign) * s * x
 	}
+
 	return float64(sign) * Ei(x) / 2
 }

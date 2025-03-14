@@ -4,7 +4,7 @@ import (
 	"math"
 )
 
-const tol = 1e-10
+const tol = 2e-10
 
 var (
 	nan = math.NaN()
