@@ -12,7 +12,7 @@ func ChebyshevT(n int, x float64) float64 {
 	}
 	if x < 0 {
 		x = -x
-		s = 1 - 2*(n&1)
+		s = int(minus1pow(n))
 	}
 
 	switch {
