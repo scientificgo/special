@@ -88,7 +88,7 @@ func branchpoint(k int, x float64) float64 {
 		b8 = -0.009616892024299432
 		b9 = 0.006014543252956118
 	)
-	return b0 + p*(b1+p*(b2+p*(b3+p*(b4+p*(b5+p*(b6+p*(b7+p*(b8+p*b9))))))))
+	return poly(p, b0, b1, b2, b3, b4, b5, b6, b7, b8, b9)
 }
 
 // rational returns an approximation of W(x) (k=0)
@@ -107,9 +107,7 @@ func rationalp0(x float64) float64 {
 		b3 = 16.43072324143226
 		b4 = 5.115235195211697
 	)
-	num := a0 + x*(a1+x*(a2+x*(a3+x*a4)))
-	den := b0 + x*(b1+x*(b2+x*(b3+x*b4)))
-	return x * num / den
+	return x * poly(x, a0, a1, a2, a3, a4) / poly(x, b0, b1, b2, b3, b4)
 }
 
 func rationalp1(x float64) float64 {
@@ -126,9 +124,7 @@ func rationalp1(x float64) float64 {
 		b3 = 0.916460018803122
 		b4 = 0.0530686404483322
 	)
-	num := a0 + x*(a1+x*(a2+x*(a3+x*a4)))
-	den := b0 + x*(b1+x*(b2+x*(b3+x*b4)))
-	return x * num / den
+	return x * poly(x, a0, a1, a2, a3, a4) / poly(x, b0, b1, b2, b3, b4)
 }
 
 // rationalm returns a rational polynomial approximation of W(x) (k=-1)
@@ -146,7 +142,7 @@ func rationalm(x float64) float64 {
 		b5 = 1477.9341280760887
 	)
 
-	return (a0 + x*(a1+x*a2)) / (b0 + x*(b1+x*(b2+x*(b3+x*(b4+x*b5)))))
+	return poly(x, a0, a1, a2) / poly(x, b0, b1, b2, b3, b4, b5)
 }
 
 // asymptotic returns an asymptotic estimate of W(x, k)

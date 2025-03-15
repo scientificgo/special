@@ -2,106 +2,6 @@ package special
 
 import "math"
 
-// Digamma returns the first logarithmic derivative of the Gamma function, defined by
-//
-//	Digamma(x) = d/dx Lgamma(x)
-//
-// See http://mathworld.wolfram.com/DigammaFunction.html for more information.
-func Digamma(x float64) float64 {
-	// Special cases.
-	switch {
-	case math.IsNaN(x) || math.IsInf(x, -1):
-		return math.NaN()
-	case math.IsInf(x, 1):
-		return x
-	case math.Trunc(x) == x && x <= 0:
-		return math.NaN()
-	}
-
-	const xmin = 5
-
-	// If |x| < xmin, use the recurrence relation Digamma(x+1) = Digamma(x) + 1/x
-	// to increment x until x >= xmin.
-
-	res := 0.0
-	for math.Abs(x) < xmin {
-		res -= 1 / x
-		x++
-	}
-
-	// For |x| > xmin, use the Taylor series expansion about x = ±∞.
-
-	const (
-		c0 = -1. / 12
-		c1 = 1. / 120
-		c2 = -1. / 252
-		c3 = 1. / 240
-		c4 = -1. / 132
-		c5 = 691. / 32760
-		c6 = -1. / 12
-	)
-	s := math.Copysign(1, x)
-	x = math.Abs(x)
-	y := 1 / (x * x)
-	res += math.Log(x) - (s/2)/x + y*(c0+y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6)))))))
-
-	if s < 0 {
-		res += math.Pi / math.Tan(math.Pi*x)
-	}
-	return res
-}
-
-// Trigamma returns the logarithmic second derivative of Gamma(x), or, equivalently,
-// the first derivative of the Digamma function.
-//
-//	Trigamma(x) = d/dx Digamma(x)
-//
-// See http://mathworld.wolfram.com/TrigammaFunction.html for more information.
-func Trigamma(x float64) float64 {
-	// Special cases.
-	switch {
-	case math.IsNaN(x) || math.IsInf(x, -1):
-		return math.NaN()
-	case math.IsInf(x, 1):
-		return 0
-	case x <= 0 && math.Trunc(x) == x:
-		return math.NaN()
-	}
-
-	const xmin = 8
-
-	// If |x| < xmin, use the recurrence relation to increment x until x >= xmin.
-
-	res := 0.0
-	for math.Abs(x) < xmin {
-		res += 1 / (x * x)
-		x++
-	}
-
-	// For |x| > min, use an asymptotic (divergent) series expansion about x = ±∞.
-
-	const (
-		c0 = 1. / 6
-		c1 = -1. / 30
-		c2 = 1. / 42
-		c3 = -1. / 30
-		c4 = 5. / 66
-		c5 = -691. / 2730
-		c6 = 7. / 6
-		c7 = -3617. / 510
-	)
-	s := math.Copysign(1, x)
-	x = math.Abs(x)
-	y := 1 / (x * x)
-	xinv := 1 / x
-	res += s * xinv * (1 + s*xinv/2 + y*(c0+y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*(c7)))))))))
-	if s < 0 {
-		cot := 1 / math.Tan(math.Pi*x)
-		res += math.Pi * math.Pi * (1 + cot*cot)
-	}
-	return res
-}
-
 // Polygamma returns the nth derivative of the Digamma function.
 //
 //	Polygamma(n, x) = (d/dx)**n Digamma(x)
@@ -199,7 +99,7 @@ func scaledcotderiv(n int, x float64) float64 {
 
 	const (
 		maxiter = 200
-		tol     = 1e-14
+		tol     = 1e-16
 	)
 
 	// Calculate the sum.
@@ -271,7 +171,7 @@ func polygamman(n int, lnfac, x float64) float64 {
 func polygammanseries(n int, lnfac, x float64) float64 {
 	const (
 		maxiter = 200
-		tol     = 1e-12
+		tol     = 1e-16
 	)
 
 	s := minus1pow(n + 1)
@@ -313,11 +213,12 @@ func polygamma2(x float64) float64 {
 		c7 = 691. / 210
 	)
 
-	res += y * (c0 + s*c1/x + y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*c7))))))
+	res += y * (c0 + s*c1/x + y*poly(y, c2, c3, c4, c5, c6, c7))
 	if s < 0 {
 		cot := 1 / math.Tan(math.Pi*x)
 		csc := 1 / math.Sin(math.Pi*x)
-		res += 2 * math.Pi * math.Pi * math.Pi * cot * csc * csc
+		const pi3 = math.Pi * math.Pi * math.Pi
+		res += 2 * pi3 * cot * csc * csc
 	}
 	return res
 }
@@ -353,7 +254,8 @@ func polygamma3(x float64) float64 {
 	if s < 0 {
 		cot := 1 / math.Tan(math.Pi*x)
 		cot2 := cot * cot
-		res += 2 * math.Pi * math.Pi * math.Pi * math.Pi * (1 + cot2*(4+3*cot2))
+		const pi4 = math.Pi * math.Pi * math.Pi * math.Pi
+		res += 2 * pi4 * (1 + cot2*(4+3*cot2))
 	}
 	return res
 }
@@ -385,7 +287,7 @@ func polygamma4(x float64) float64 {
 		c6 = -130
 		c7 = 691
 	)
-	res += y * y * (c0 + s*c1/x + y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*c7))))))
+	res += y * y * (c0 + s*c1/x + y*poly(y, c2, c3, c4, c5, c6, c7))
 
 	if s < 0 {
 		cot := 1 / math.Tan(math.Pi*x)
@@ -425,43 +327,16 @@ func polygamma5(x float64) float64 {
 		c6 = 1820
 		c7 = -11056
 	)
-	res += s * y * y / x * (c0 + s*c1/x + y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*c7))))))
+	res += s * y * y / x * (c0 + s*c1/x + y*poly(y, c2, c3, c4, c5, c6, c7))
 	if s < 0 {
 		cot := 1 / math.Tan(math.Pi*x)
 		csc := 1 / math.Sin(math.Pi*x)
 		cot2 := cot * cot
 		csc2 := csc * csc
 
-		pi6 := math.Pi * math.Pi * math.Pi * math.Pi * math.Pi * math.Pi
+		const pi2 = math.Pi * math.Pi
+		const pi6 = pi2 * pi2 * pi2
 		res += 8 * pi6 * csc2 * (2*csc2*csc2 + 2*cot2*cot2 + 11*cot2*csc2)
 	}
 	return res
-}
-
-// Harmonic returns the harmonic numbers, defined for integer n by
-//
-//	              n
-//	Harmonic(n) = ∑ 1/k
-//	             k=1
-//
-// and extended to non-integer x by
-//
-//	Harmonic(x) = EulerGamma + Digamma(x+1)
-//
-// where Digamma is the logarithmic derivative of the Gamma function.
-//
-// See http://mathworld.wolfram.com/HarmonicNumber.html for more information.
-func Harmonic(x float64) float64 {
-	switch {
-	case math.IsInf(x, 1) || x == 0 || x == 1:
-		return x
-	case x >= 1 && x <= 25 && x == math.Trunc(x):
-		res := 1.0
-		for ; x > 1; x-- {
-			res += 1 / x
-		}
-		return res
-	default:
-		return EulerGamma + Digamma(x+1)
-	}
 }

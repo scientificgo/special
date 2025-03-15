@@ -15,31 +15,25 @@ import "math"
 //
 // See http://mathworld.wolfram.com/RiemannZetaFunction.html for more information.
 func Zeta(x float64) float64 {
-	res := 1.0
 
 	switch {
 	case math.IsNaN(x) || math.IsInf(x, -1):
-		res = math.NaN()
-		goto end
+		return math.NaN()
 	case math.IsInf(x, 1):
-		res = 1
-		goto end
+		return 1
 	case x == 0:
-		res = -1. / 2
-		goto end
+		return -1. / 2
 	case x == 1:
-		res = math.Inf(1)
-		goto end
+		return math.Inf(1)
 	case x == -1:
-		res = -1. / 12
-		goto end
+		return -1. / 12
 	case x <= -2 && math.Trunc(x) == x && int(x)&1 == 0:
-		res = 0
-		goto end
+		return 0
 	}
 
 	const (
 		lnpi = 1.144729885849400174143427351353058711647294812915311571513
+		ln2  = math.Ln2
 		ln3  = 1.098612288668109691395245236922525704647490557822749451734
 		ln4  = 1.386294361119890618834464242916353136151000268720510508241
 		ln5  = 1.609437912434100374600759333226187639525601354268517721912
@@ -47,41 +41,43 @@ func Zeta(x float64) float64 {
 		ln7  = 1.945910149055313305105352743443179729637084729581861188459
 		ln8  = 2.079441541679835928251696364374529704226500403080765762362
 		ln9  = 2.197224577336219382790490473845051409294981115645498903469
-		ln10 = 2.302585092994045684017991454684364207601101488628772976033
+		ln10 = math.Ln10
 	)
+
+	res := 1.0
 
 	// Reflection formula.
 	if x < -1 {
 		lg, sg := math.Lgamma(1 - x)
-		res = float64(sg) * math.Exp(x*math.Ln2+(x-1)*lnpi+lg) * math.Sin(math.Pi*x/2)
+		res = float64(sg) * math.Exp(x*ln2+(x-1)*lnpi+lg) * math.Sin(math.Pi*x/2)
 		x = 1 - x
 	}
 
 	// Fir |x| ≥ 12, use the first few terms of the series definition as it converges very rapidly as x -> ∞.
 	// For |x| < 12, use the Laurent series expansion.
 	switch xabs := math.Abs(x); {
-	case xabs >= 75:
-		// Nothing to do.
-	case xabs >= 50:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x))
-	case xabs >= 25:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x))
-	case xabs >= 20:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x))
-	case xabs >= 15:
-		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x))
+	// case xabs >= 75:
+	// 	// Nothing to do.
+	// case xabs >= 50:
+	// 	x = -x
+	// 	res *= (1 + math.Exp(math.Ln2*x))
+	// case xabs >= 25:
+	// 	x = -x
+	// 	res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x))
+	// case xabs >= 20:
+	// 	x = -x
+	// 	res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x))
+	// case xabs >= 15:
+	// 	x = -x
+	// 	res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x))
 	case xabs >= 12:
 		x = -x
-		res *= (1 + math.Exp(math.Ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x) +
+		res *= (1 + math.Exp(ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x) +
 			math.Exp(ln7*x) + math.Exp(ln8*x) + math.Exp(ln9*x) + math.Exp(ln10*x))
 	default:
 		res *= zetalaurent(x)
 	}
-end:
+
 	return res
 }
 
@@ -89,7 +85,7 @@ end:
 func zetalaurent(x float64) float64 {
 	const (
 		maxiter = 200
-		tol     = 1e-17
+		tol     = 1e-16
 	)
 
 	x--
@@ -99,34 +95,6 @@ func zetalaurent(x float64) float64 {
 		res += _zl[i] * tmp
 	}
 	return res + 1/x
-}
-
-// Eta returns the Dirichlet eta function, defined by
-//
-//	         ∞
-//	Eta(x) = ∑ (-1)**(n+1) / n**x = (1 - 2**(1-x)) Zeta(x)
-//	        n=1
-//
-// where Zeta is the Riemann zeta function.
-//
-// See http://mathworld.wolfram.com/DirichletEtaFunction.html for more information.
-func Eta(x float64) float64 {
-	switch {
-	case math.IsNaN(x) || math.IsInf(x, -1):
-		return math.NaN()
-	case math.IsInf(x, 1):
-		return 1
-	case x == 0:
-		return 1. / 2
-	case x == 1:
-		return math.Ln2
-	case x == -1:
-		return 1. / 4
-	case x <= -2 && math.Trunc(x) == x && int(x)&1 == 0:
-		return 0
-	default:
-		return (1 - math.Exp((1-x)*math.Ln2)) * Zeta(x)
-	}
 }
 
 // The first 200 expansion coefficients for zetalaurent are precomputed below:

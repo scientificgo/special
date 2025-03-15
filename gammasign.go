@@ -2,14 +2,12 @@ package special
 
 import "math"
 
-// GammaSign returns the sign of the Gamma function at x. For non-positive integer x,
-// the sign is given by the sign of the residue, i.e. (-1)**|x|.
+// GammaSign returns the sign of the Gamma function at x.
+// For non-positive integer x, it is sign of the residue, i.e. (-1)**|x|.
 func GammaSign(x float64) int {
-	if x >= 0 {
+	if x >= 0 || math.IsInf(x, -1) || math.IsNaN(x) {
 		return 1
 	}
-	if x != math.Trunc(x) {
-		x = math.Trunc(x - 1)
-	}
-	return 1 - 2*(int(x)&1)
+	n := math.Abs(math.Floor(x))
+	return int(minus1pow(int(n)))
 }

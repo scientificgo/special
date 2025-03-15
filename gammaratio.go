@@ -94,6 +94,7 @@ func Poch(x, k float64) float64 {
 		}
 		return 0
 	}
+
 	if math.IsInf(k, 0) {
 		if x <= 0 && x == math.Trunc(x) {
 			return 0
@@ -103,5 +104,6 @@ func Poch(x, k float64) float64 {
 		}
 		return k * float64(GammaSign(x))
 	}
+
 	return GammaRatio([]float64{x + k}, []float64{x})
 }

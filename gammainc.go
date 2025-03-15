@@ -112,7 +112,7 @@ func GammaRegQ(a, x float64) float64 {
 func gammaPseries(a, x float64) float64 {
 	const (
 		maxiter = 2000
-		rtol    = 1e-20
+		rtol    = 1e-16
 	)
 
 	// Note that each term is proportional to the last by a factor of x/(a+k)

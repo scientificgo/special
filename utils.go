@@ -1,5 +1,7 @@
 package special
 
+import "math"
+
 // removeCommonElements filters the slices a and b to remove any elements in both.
 func removeCommonElements(a, b []float64) ([]float64, []float64, int, int) {
 	na := len(a)
@@ -23,14 +25,26 @@ func removeCommonElements(a, b []float64) ([]float64, []float64, int, int) {
 			}
 		}
 	}
+
 	return aa, bb, na, nb
 }
 
-// s = (-1)**n
+// minus1pow returns (-1)**n
 func minus1pow(n int) float64 {
-	if n%2 == 0 {
+	if n&1 == 0 {
 		return 1
 	} else {
 		return -1
 	}
+}
+
+// poly evaluates a polynomial cs[0] + cs[1].x + ... + cs[n].x^n using Horner's method
+func poly(x float64, c ...float64) float64 {
+	n := len(c)
+	res := c[n-1]
+	for i := n - 2; i >= 0; i-- {
+		res = math.FMA(x, res, c[i])
+	}
+	return res
+
 }

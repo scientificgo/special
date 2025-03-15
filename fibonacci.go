@@ -10,21 +10,22 @@ import "math"
 //
 // and can extended to non-integer n by
 //
-//	Fibonacci(n) = (φ**n - Cos(nπ)/φ**n) / √5
+//	Fibonacci(x) = (φ**x - Cos(πx)/φ**x) / √5
 //
 // where φ = (1 + √5) / 2 is the golden ratio.
 //
-// See http://mathworld.wolfram.com/FibonacciNumber.html for more
-// information.
-func Fibonacci(n float64) float64 {
-	if math.IsNaN(n) || math.IsInf(n, -1) {
+// See http://mathworld.wolfram.com/FibonacciNumber.html.
+func Fibonacci(x float64) float64 {
+	if math.IsNaN(x) || math.IsInf(x, -1) {
 		return math.NaN()
 	}
-	if math.IsInf(n, +1) {
+	if math.IsInf(x, +1) {
 		return math.Inf(+1)
 	}
-	res := math.Pow(math.Phi, n)
-	res = res - math.Cos(math.Pi*n)/res
-	res = res / (2*math.Phi - 1)
-	return res
+
+	const sqrt5 = 2*math.Phi - 1
+
+	phin := math.Pow(math.Phi, x)
+	res := phin - math.Cos(math.Pi*x)/phin
+	return res / sqrt5
 }

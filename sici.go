@@ -14,11 +14,15 @@ import "math"
 //
 // See http://mathworld.wolfram.com/SineIntegral.html for more information.
 func Si(x float64) float64 {
-	switch xabs := math.Abs(x); {
-	case math.IsNaN(x):
+	if math.IsNaN(x) {
 		return math.NaN()
-	case math.IsInf(x, 0):
+	}
+
+	if math.IsInf(x, 0) {
 		return math.Copysign(math.Pi/2, x)
+	}
+
+	switch xabs := math.Abs(x); {
 	case xabs <= 4:
 		const (
 			c0 = 1
@@ -38,9 +42,10 @@ func Si(x float64) float64 {
 			d5 = 4.5049097575386581e-13
 			d6 = 3.21107051193712168e-16
 		)
-		x2 := xabs * xabs
-		return x * (c0 + x2*(c1+x2*(c2+x2*(c3+x2*(c4+x2*(c5+x2*(c6+x2*c7))))))) /
-			(d0 + x2*(d1+x2*(d2+x2*(d3+x2*(d4+x2*(d5+x2*d6))))))
+		x2 := x * x
+
+		return x * poly(x2, c0, c1, c2, c3, c4, c5, c6, c7) /
+			poly(x2, d0, d1, d2, d3, d4, d5, d6)
 
 	default:
 		s := math.Copysign(1, x)
@@ -82,14 +87,13 @@ func Ci(x float64) float64 {
 //
 // See http://mathworld.wolfram.com/CosineIntegral.html for more information.
 func Cin(x float64) float64 {
-	x = math.Abs(x)
-	switch {
-	case math.IsNaN(x) || math.IsInf(x, 0) || x == 0:
-		return x
-	case x <= 4:
-		return cinsmall(x)
+	switch xabs := math.Abs(x); {
+	case math.IsNaN(xabs) || math.IsInf(xabs, 0) || xabs == 0:
+		return xabs
+	case xabs <= 4:
+		return cinsmall(xabs)
 	default:
-		return EulerGamma + math.Log(x) - cilarge(x)
+		return EulerGamma + math.Log(xabs) - cilarge(xabs)
 	}
 }
 
@@ -120,13 +124,12 @@ func cinsmall(x float64) float64 {
 		d7 = 1.39759616731376855e-18
 	)
 	x2 := x * x
-	return -x2 * (c0 + x2*(c1+x2*(c2+x2*(c3+x2*(c4+x2*(c5+x2*c6)))))) /
-		(d0 + x2*(d1+x2*(d2+x2*(d3+x2*(d4+x2*(d5+x2*(d6+x2*d7)))))))
+	return -x2 * poly(x2, c0, c1, c2, c3, c4, c5, c6) /
+		poly(x2, d0, d1, d2, d3, d4, d5, d6, d7)
 }
 
 // fsici returns Ci(x)*Sin(x) + (π/2 - Si(x))*Cos(x)
 func fsici(x float64) float64 {
-	y := 1 / (x * x)
 	const (
 		c0  = 1
 		c1  = 7.44437068161936700618e2
@@ -151,13 +154,14 @@ func fsici(x float64) float64 {
 		d8 = 1.43468549171581016479e13
 		d9 = 1.11535493509914254097e13
 	)
-	return 1 / x * (c0 + y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*(c7+y*(c8+y*(c9+y*c10)))))))))) /
-		(d0 + y*(d1+y*(d2+y*(d3+y*(d4+y*(d5+y*(d6+y*(d7+y*(d8+y*d9)))))))))
+	y2 := 1 / (x * x)
+	return 1 / x * poly(y2, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10) /
+		poly(y2, d0, d1, d2, d3, d4, d5, d6, d7, d8, d9)
 }
 
 // gsici returns -Ci(x)*Cos(x) + (π/2 - Si(x))*Sin(x)
 func gsici(x float64) float64 {
-	y := 1 / (x * x)
+
 	const (
 		c0  = 1
 		c1  = 8.1359520115168615e2
@@ -182,6 +186,7 @@ func gsici(x float64) float64 {
 		d8 = 4.01839087307656620e13
 		d9 = 3.99653257887490811e13
 	)
-	return y * (c0 + y*(c1+y*(c2+y*(c3+y*(c4+y*(c5+y*(c6+y*(c7+y*(c8+y*(c9+y*c10)))))))))) /
-		(d0 + y*(d1+y*(d2+y*(d3+y*(d4+y*(d5+y*(d6+y*(d7+y*(d8+y*d9)))))))))
+	y2 := 1 / (x * x)
+	return y2 * poly(y2, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10) /
+		poly(y2, d0, d1, d2, d3, d4, d5, d6, d7, d8, d9)
 }
