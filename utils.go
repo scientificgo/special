@@ -29,8 +29,8 @@ func removeCommonElements(a, b []float64) ([]float64, []float64, int, int) {
 	return aa, bb, na, nb
 }
 
-// minus1pow returns (-1)**n
-func minus1pow(n int) float64 {
+// powN1 returns (-1)**n
+func powN1(n int) float64 {
 	if n&1 == 0 {
 		return 1
 	} else {

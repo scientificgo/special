@@ -75,32 +75,32 @@ func Zeta(x float64) float64 {
 		res *= (1 + math.Exp(ln2*x) + math.Exp(ln3*x) + math.Exp(ln4*x) + math.Exp(ln5*x) + math.Exp(ln6*x) +
 			math.Exp(ln7*x) + math.Exp(ln8*x) + math.Exp(ln9*x) + math.Exp(ln10*x))
 	default:
-		res *= zetalaurent(x)
+		res *= zeta_laurent(x)
 	}
 
 	return res
 }
 
-// zetalaurent returns the zeta function using the Laurent expansion around x=1.
-func zetalaurent(x float64) float64 {
+// zeta_laurent returns the zeta function using the Laurent expansion around x=1.
+func zeta_laurent(x float64) float64 {
 	const (
 		maxiter = 200
 		tol     = 1e-16
 	)
 
 	x--
-	res := _zl[0] + _zl[1]*x
-	for i, tmp := 2, x; i < maxiter && math.Abs(_zl[i]*tmp/res) > tol; i++ {
+	res := zeta_laurent_coefficients[0] + zeta_laurent_coefficients[1]*x
+	for i, tmp := 2, x; i < maxiter && math.Abs(zeta_laurent_coefficients[i]*tmp/res) > tol; i++ {
 		tmp *= x
-		res += _zl[i] * tmp
+		res += zeta_laurent_coefficients[i] * tmp
 	}
 	return res + 1/x
 }
 
 // The first 200 expansion coefficients for zetalaurent are precomputed below:
-// _zl[n] = (-1)**n gamma_n / n!
+// zeta_laurent_coefficients[n] = (-1)**n gamma_n / n!
 // where gamma_n is the nth Stieltjes constant.
-var _zl = [200]float64{
+var zeta_laurent_coefficients = [200]float64{
 	EulerGamma,
 	0.0728158454836767249,
 	-0.00484518159643615924,

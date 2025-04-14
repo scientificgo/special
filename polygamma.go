@@ -26,7 +26,7 @@ func Polygamma(n int, x float64) float64 {
 	case n == 5:
 		return polygamma5(x)
 	default:
-		s := minus1pow(n)
+		s := powN1(n)
 		lnfac, _ := math.Lgamma(float64(n + 1))
 
 		// Reflection formula, where pg(n, x) = polygamma(n, x):
@@ -76,7 +76,7 @@ func Polygamma(n int, x float64) float64 {
 //	π (d/dx)**n cot(πx) / n! = 1/x**(n+1) + ∑ 1/(x+k)**(n+1) + 1/(x-k)**(n+1)
 //	                                       k=1
 func scaledcotderiv(n int, x float64) float64 {
-	s := minus1pow(n)
+	s := powN1(n)
 
 	// The function cot(z) and its derivatives have a domain of z in [-π, π),
 	// hence cot(πx) has domain x in [-1, 1).
@@ -141,7 +141,7 @@ func polygamman(n int, lnfac, x float64) float64 {
 		*/
 	)
 
-	s := minus1pow(n + 1)
+	s := powN1(n + 1)
 
 	y := 1 / (x * x)
 	lx := math.Log(x)
@@ -174,7 +174,7 @@ func polygammanseries(n int, lnfac, x float64) float64 {
 		tol     = 1e-16
 	)
 
-	s := minus1pow(n + 1)
+	s := powN1(n + 1)
 
 	res := 0.0
 	tmp := 1.0

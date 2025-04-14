@@ -47,7 +47,7 @@ func GammaRegP(a, x float64) float64 {
 	//
 
 	if x > a && !(x < 2 && a > -10) {
-		return 1 - gammaQcf(a, x)
+		return 1 - gammaQ_cf(a, x)
 	}
 
 	//
@@ -55,7 +55,7 @@ func GammaRegP(a, x float64) float64 {
 	// fraction for gammaQ can't be used.
 	//
 
-	return gammaPseries(a, x)
+	return gammaP_series(a, x)
 }
 
 // GammaRegQ returns the regularised upper incomplete gamma function,
@@ -97,7 +97,7 @@ func GammaRegQ(a, x float64) float64 {
 	//
 
 	if x < a || (x < 2 && a > -10) {
-		return 1 - gammaPseries(a, x)
+		return 1 - gammaP_series(a, x)
 	}
 
 	//
@@ -105,11 +105,11 @@ func GammaRegQ(a, x float64) float64 {
 	// whenever possible.
 	//
 
-	return gammaQcf(a, x)
+	return gammaQ_cf(a, x)
 }
 
-// gammaPseries returns GammaRegP using the hypergeometric series definition
-func gammaPseries(a, x float64) float64 {
+// gammaP_series returns GammaRegP using the hypergeometric series definition
+func gammaP_series(a, x float64) float64 {
 	const (
 		maxiter = 2000
 		rtol    = 1e-16
@@ -131,14 +131,14 @@ func gammaPseries(a, x float64) float64 {
 	return res
 }
 
-// gammaQcf returns GammaRegQ using a continued fraction.
-func gammaQcf(a, x float64) float64 {
+// gammaQ_cf returns GammaRegQ using a continued fraction.
+func gammaQ_cf(a, x float64) float64 {
 	lga, sga := math.Lgamma(a)
 	s := math.Copysign(1, x)
 	lx := math.Log(math.Abs(x))
 	xma := x - a
 
-	d := cfgammaQdepth(a, x)
+	d := gammaQ_cfdepth(a, x)
 	cf := xma + float64(d<<1+1)
 	for i := d; i > 0; i-- {
 		j := (i-1)<<1 + 1
@@ -149,8 +149,8 @@ func gammaQcf(a, x float64) float64 {
 	return s * float64(sga) * math.Exp(a*lx-x-lga) / cf
 }
 
-// cfdepth returns the depth required for convergence for the continued fraction for GammaRegQ.
-func cfgammaQdepth(a, x float64) int {
+// gammaQ_cfdepth returns the depth required for convergence for the continued fraction for GammaRegQ.
+func gammaQ_cfdepth(a, x float64) int {
 	switch y := x / a; {
 	case y > 1.5:
 		return 10

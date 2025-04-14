@@ -9,5 +9,5 @@ func GammaSign(x float64) int {
 		return 1
 	}
 	n := math.Abs(math.Floor(x))
-	return int(minus1pow(int(n)))
+	return int(powN1(int(n)))
 }

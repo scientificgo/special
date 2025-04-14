@@ -50,7 +50,7 @@ func Si(x float64) float64 {
 	default:
 		s := math.Copysign(1, x)
 		sin, cos := math.Sincos(xabs)
-		return s * (math.Pi/2 - cos*fsici(xabs) - sin*gsici(xabs))
+		return s * (math.Pi/2 - cos*sici_f(xabs) - sin*sici_g(xabs))
 	}
 }
 
@@ -70,9 +70,9 @@ func Ci(x float64) float64 {
 	case math.IsInf(x, 1):
 		return 0
 	case x <= 4:
-		return EulerGamma + math.Log(x) - cinsmall(x)
+		return EulerGamma + math.Log(x) - cin_small(x)
 	default:
-		return cilarge(x)
+		return ci_large(x)
 	}
 }
 
@@ -91,20 +91,20 @@ func Cin(x float64) float64 {
 	case math.IsNaN(xabs) || math.IsInf(xabs, 0) || xabs == 0:
 		return xabs
 	case xabs <= 4:
-		return cinsmall(xabs)
+		return cin_small(xabs)
 	default:
-		return EulerGamma + math.Log(xabs) - cilarge(xabs)
+		return EulerGamma + math.Log(xabs) - ci_large(xabs)
 	}
 }
 
-// cilarge returns an approximation to Ci for x >= 4
-func cilarge(x float64) float64 {
+// ci_large returns an approximation to Ci for x >= 4
+func ci_large(x float64) float64 {
 	sin, cos := math.Sincos(x)
-	return sin*fsici(x) - cos*gsici(x)
+	return sin*sici_f(x) - cos*sici_g(x)
 }
 
 // cin returns a rational approximation for Cin for x <= 4
-func cinsmall(x float64) float64 {
+func cin_small(x float64) float64 {
 	const (
 		c0 = -1. / 4
 		c1 = 7.51851524438898291e-3
@@ -128,8 +128,8 @@ func cinsmall(x float64) float64 {
 		poly(x2, d0, d1, d2, d3, d4, d5, d6, d7)
 }
 
-// fsici returns Ci(x)*Sin(x) + (π/2 - Si(x))*Cos(x)
-func fsici(x float64) float64 {
+// sici_f returns Ci(x)*Sin(x) + (π/2 - Si(x))*Cos(x)
+func sici_f(x float64) float64 {
 	const (
 		c0  = 1
 		c1  = 7.44437068161936700618e2
@@ -159,8 +159,8 @@ func fsici(x float64) float64 {
 		poly(y2, d0, d1, d2, d3, d4, d5, d6, d7, d8, d9)
 }
 
-// gsici returns -Ci(x)*Cos(x) + (π/2 - Si(x))*Sin(x)
-func gsici(x float64) float64 {
+// sici_g returns -Ci(x)*Cos(x) + (π/2 - Si(x))*Sin(x)
+func sici_g(x float64) float64 {
 
 	const (
 		c0  = 1

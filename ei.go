@@ -26,18 +26,18 @@ func Ei(x float64) float64 {
 	case x == 0:
 		return math.Inf(-1)
 	case xabs <= xsmall:
-		return eismall(x, xabs)
+		return ei_small(x, xabs)
 	case xabs >= xlarge:
-		return eilarge(x)
+		return ei_large(x)
 	case x < -xsmall:
-		return eicf(x)
+		return ei_cf(x)
 	default:
-		return eiseries(x, xabs)
+		return ei_series(x, xabs)
 	}
 }
 
-// eismall returns the exponential integral Ei(x) for small |x|.
-func eismall(x, xabs float64) float64 {
+// ei_small returns the exponential integral Ei(x) for small |x|.
+func ei_small(x, xabs float64) float64 {
 	const (
 		c0  = 1.
 		c1  = 1. / 4
@@ -63,8 +63,8 @@ func eismall(x, xabs float64) float64 {
 		x*poly(x, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14, c15, c16, c17, c18)
 }
 
-// eilarge returns the exponential integral Ei(x) for large |x|.
-func eilarge(x float64) float64 {
+// ei_large returns the exponential integral Ei(x) for large |x|.
+func ei_large(x float64) float64 {
 	const (
 		c0  = 1
 		c1  = 1
@@ -88,8 +88,8 @@ func eilarge(x float64) float64 {
 	return s * math.Exp(x+math.Log(sum))
 }
 
-// eicf returns the exponential integral Ei(x) using a continued fraction.
-func eicf(x float64) float64 {
+// ei_cf returns the exponential integral Ei(x) using a continued fraction.
+func ei_cf(x float64) float64 {
 	// cf = a1 + b1/(a2 + b2/(a3 + b3/(...)))
 	depth := 20
 	an := float64(2*depth-1) - x
@@ -104,8 +104,8 @@ func eicf(x float64) float64 {
 	return -math.Exp(x) / res
 }
 
-// eiseries returns the exponential integral Ei(x) using the infinite series definition.
-func eiseries(x, xabs float64) float64 {
+// ei_series returns the exponential integral Ei(x) using the infinite series definition.
+func ei_series(x, xabs float64) float64 {
 	const (
 		tol     = 1e-16
 		maxiter = 1e3

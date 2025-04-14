@@ -28,14 +28,14 @@ func En(n int, x float64) float64 {
 	case n == 1:
 		return -Ei(-x)
 	case x > 5 || n >= 100:
-		return encf(n, x)
+		return en_cf(n, x)
 	default:
-		return enrec(n, x)
+		return en_rec(n, x)
 	}
 }
 
-// encf returns the exponential integral En(x) using a continued fraction.
-func encf(n int, x float64) float64 {
+// en_cf returns the exponential integral En(x) using a continued fraction.
+func en_cf(n int, x float64) float64 {
 	depth := 15
 	res := 1.0
 	for depth > 0 {
@@ -47,10 +47,10 @@ func encf(n int, x float64) float64 {
 	return math.Exp(-x) / res
 }
 
-// enrec returns the exponential integral En(x) using the recurrence relation
+// en_rec returns the exponential integral En(x) using the recurrence relation
 //
 //	En(n+1, x) = (Exp(-x) - x*En(n, x))/n
-func enrec(n int, x float64) float64 {
+func en_rec(n int, x float64) float64 {
 	k := math.Exp(-x)
 	y := Ei(-x)
 	switch res := 0.0; {
