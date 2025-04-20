@@ -9,7 +9,7 @@ import "math"
 // See http://mathworld.wolfram.com/PolygammaFunction.html for more information.
 func Polygamma(n int, x float64) float64 {
 	switch {
-	case n < 0 || math.IsNaN(x) || math.IsInf(x, -1) || (x <= 0 && math.Trunc(x) == x):
+	case n < 0 || math.IsNaN(x) || math.IsInf(x, -1) || isNonPosInt(x):
 		return math.NaN()
 	case n == 0:
 		return Digamma(x)

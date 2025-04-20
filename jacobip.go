@@ -15,7 +15,7 @@ func JacobiP(n int, a, b, x float64) float64 {
 
 	var res float64
 	switch {
-	case math.IsNaN(x) || math.IsNaN(a) || math.IsNaN(b) || math.IsInf(a, 0) || math.IsInf(b, 0) || (a < -float64(n) && a < 0 && a == math.Trunc(a)):
+	case math.IsNaN(x) || math.IsNaN(a) || math.IsNaN(b) || math.IsInf(a, 0) || math.IsInf(b, 0) || (a < -float64(n) && isNonPosInt(a)):
 		res = math.NaN()
 	case n < 0:
 		res = 0

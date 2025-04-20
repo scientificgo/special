@@ -48,3 +48,15 @@ func poly(x float64, c ...float64) float64 {
 	return res
 
 }
+
+func isNegInt(x float64) bool {
+	if x < 0 {
+		_, xf := math.Modf(x)
+		return xf == 0
+	}
+	return false
+}
+
+func isNonPosInt(x float64) bool {
+	return x == 0 || isNegInt(x)
+}

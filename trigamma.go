@@ -17,7 +17,7 @@ func Trigamma(x float64) float64 {
 		return math.NaN()
 	case math.IsInf(x, 1):
 		return 0
-	case x <= 0 && math.Trunc(x) == x:
+	case isNonPosInt(x):
 		return math.NaN()
 	}
 

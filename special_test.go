@@ -16,7 +16,7 @@ func equalFloat64(x float64, y float64) bool {
 		return math.IsNaN(x)
 	}
 
-	if math.IsInf(y, 1) || math.IsInf(y, -1) {
+	if math.IsInf(y, 0) {
 		return x == y
 	}
 

@@ -138,7 +138,7 @@ func HypPFQ(a, b []float64, x float64) float64 {
 		}
 	}
 
-	if amin <= 0 && math.Trunc(amin) == amin {
+	if isNonPosInt(amin) {
 		numt = -int(amin)
 		istrunc = true
 	}

@@ -80,3 +80,59 @@ func TestPoly(t *testing.T) {
 		})
 	}
 }
+
+func TestIsNegInt(t *testing.T) {
+	cases := []struct {
+		In1 float64
+		Out bool
+	}{
+		{-0, false},
+		{0, false},
+		{1, false},
+		{1000, false},
+		{math.MaxInt64, false},
+		{math.Pi, false},
+
+		{-1, true},
+		{-1000, true},
+		{-math.MaxInt64, true},
+		{-math.Pi, false},
+	}
+	for i, c := range cases {
+		t.Run(fmt.Sprintf("%v", i), func(tt *testing.T) {
+			res := isNegInt(c.In1)
+			ok := res == c.Out
+			if !ok {
+				tt.Errorf("Got %v, want %v", res, c.Out)
+			}
+		})
+	}
+}
+
+func TestIsNonPosInt(t *testing.T) {
+	cases := []struct {
+		In1 float64
+		Out bool
+	}{
+		{1, false},
+		{1000, false},
+		{math.MaxInt64, false},
+		{math.Pi, false},
+
+		{0, true},
+		{-0, true},
+		{-1, true},
+		{-1000, true},
+		{-math.MaxInt64, true},
+		{-math.Pi, false},
+	}
+	for i, c := range cases {
+		t.Run(fmt.Sprintf("%v", i), func(tt *testing.T) {
+			res := isNonPosInt(c.In1)
+			ok := res == c.Out
+			if !ok {
+				tt.Errorf("Got %v, want %v", res, c.Out)
+			}
+		})
+	}
+}

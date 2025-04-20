@@ -18,7 +18,7 @@ func Poch(x, k float64) float64 {
 	}
 
 	if math.IsInf(k, 0) {
-		if x <= 0 && x == math.Trunc(x) {
+		if isNonPosInt(x) {
 			return 0
 		}
 		if k < 0 {

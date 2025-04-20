@@ -9,7 +9,7 @@ func GegenbauerC(n int, a, x float64) float64 {
 	switch {
 	case math.IsNaN(a) || math.IsNaN(x) || n < 0:
 		return math.NaN()
-	case a <= 0 && a == math.Trunc(a):
+	case isNonPosInt(a):
 		return 0
 	case n == 0:
 		return 1

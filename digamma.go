@@ -16,7 +16,7 @@ func Digamma(x float64) float64 {
 		return math.NaN()
 	case math.IsInf(x, 1):
 		return x
-	case math.Trunc(x) == x && x <= 0:
+	case isNonPosInt(x):
 		return math.NaN()
 	}
 

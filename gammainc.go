@@ -46,7 +46,7 @@ func GammaIncL(a, x float64) float64 {
 // for more information.
 func GammaIncU(a, x float64) float64 {
 	switch {
-	case a <= 0 && math.Trunc(a) == a:
+	case isNonPosInt(a):
 		return math.Pow(x, a) * En(int(1-a), x)
 	default:
 		lga, sga := math.Lgamma(a)

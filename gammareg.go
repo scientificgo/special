@@ -35,7 +35,7 @@ func GammaRegP(a, x float64) float64 {
 			return 0.5
 		}
 		return 0
-	case math.IsInf(x, 1) || (a <= 0 && a == math.Trunc(a)):
+	case math.IsInf(x, 1) || isNonPosInt(a):
 		return 1
 	case a == 1:
 		return 1 - math.Exp(-x)
@@ -77,7 +77,7 @@ func GammaRegQ(a, x float64) float64 {
 			return 0.5
 		}
 		return 1
-	case math.IsInf(x, 1) || (a <= 0 && a == math.Trunc(a)):
+	case math.IsInf(x, 1) || isNonPosInt(a):
 		return 0
 	case a == 1:
 		return math.Exp(-x)

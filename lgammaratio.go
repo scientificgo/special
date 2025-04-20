@@ -25,7 +25,7 @@ func LgammaRatio(x, y []float64) (float64, int) {
 	for i := 0; i < nx; i++ {
 		if xi := x[i]; math.IsInf(xi, 0) || math.IsNaN(xi) {
 			return math.NaN(), 1
-		} else if xi <= 0 && xi == math.Trunc(xi) {
+		} else if isNonPosInt(xi) {
 			npolex++
 			lg, _ := math.Lgamma(1 - xi)
 			res -= lg
@@ -39,7 +39,7 @@ func LgammaRatio(x, y []float64) (float64, int) {
 	for i := 0; i < ny; i++ {
 		if yi := y[i]; math.IsInf(yi, 0) || math.IsNaN(yi) {
 			return math.NaN(), 1
-		} else if yi <= 0 && yi == math.Trunc(yi) {
+		} else if isNonPosInt(yi) {
 			npoley++
 			lg, _ := math.Lgamma(1 - yi)
 			res += lg
