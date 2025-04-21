@@ -2,6 +2,7 @@ package special_test
 
 import (
 	"fmt"
+	"math"
 	"testing"
 
 	. "github.com/scientificgo/special"
@@ -16,13 +17,16 @@ func TestLgammaRatio(t *testing.T) {
 		{[]float64{nan}, []float64{0.93}, nan, 1},
 		{[]float64{1}, []float64{nan}, nan, 1},
 		{[]float64{-100}, []float64{-100}, 0, 1},
+		{[]float64{-inf, 5}, []float64{3, -inf}, math.Log(24) - math.Log(2), 1},
 		{[]float64{+inf}, []float64{+inf}, 0, 1},
 		{[]float64{-inf}, []float64{-inf}, 0, 1},
 		{[]float64{-10}, []float64{-inf}, nan, 1},
 		{[]float64{17.1}, []float64{+inf}, nan, 1},
 		{[]float64{+inf}, []float64{17.1}, nan, 1},
+		{[]float64{+inf}, []float64{-2.1}, nan, 1},
 		{[]float64{-4}, []float64{-7}, 5.3471075307174685, -1},
 		{[]float64{-100}, []float64{-150}, 241.2807302938602, 1},
+		{[]float64{-240}, []float64{-250}, 55.03228497187809, 1},
 		{[]float64{-3}, []float64{102.3}, +inf, -1},
 		{[]float64{-4}, []float64{102.3}, +inf, 1},
 		{[]float64{102.2132}, []float64{-19}, -inf, -1},
