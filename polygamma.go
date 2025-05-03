@@ -26,7 +26,7 @@ func Polygamma(n int, x float64) float64 {
 	case n == 5:
 		return polygamma5(x)
 	default:
-		s := powN1(n)
+		s := float64(powN1(n))
 		lnfac, _ := math.Lgamma(float64(n + 1))
 
 		// Reflection formula, where pg(n, x) = polygamma(n, x):

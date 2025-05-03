@@ -7,39 +7,48 @@ import "math"
 //
 // See http://mathworld.wolfram.com/AssociatedLegendrePolynomial.html for more information.
 func LegendreAP(n, m int, x float64) float64 {
-	// Calculate P(|m|, |m|, x) and then use the recurrence
-	// relation to get P(n, |m|, x). Finally, if m < 0, use the
-	// reflection formula between m and -m to get P(n, m, x).
+	sign := float64(powN1(m)) // -1 for odd m
 
-	if n < 0 {
-		n = -n - 1
+	if sign < 0 && math.Abs(x) > 1 {
+		return math.NaN()
 	}
 
-	sign := 1 - 2*(m&1)
-	switch {
-	case sign < 0 && math.Abs(x) > 1:
-		return math.NaN()
-	case m > n || m < -n:
+	// P(-n, m, x) = P(n-1, m, x)
+	if n < 0 {
+		n = -(n + 1)
+	}
+
+	// P(n, -m, x) = r(n, m) * P(n, m, x) using the reflection formula
+	reflect := m < 0
+	if reflect {
+		m = -m
+	}
+
+	// P(n<m, m, x) = 0
+	if n < m {
 		return 0
 	}
 
-	// Calculate the prefactor for cases with m < 0 using the reflection formula.
-	negmfac := 1.0
-	if m < 0 {
-		m = -m
-		negmfac = float64(sign) * math.Gamma(float64(n-m+1)) / math.Gamma(float64(n+m+1))
-	}
+	// Special base case P(m, m, x)
+	res := sign *
+		math.Pow(2, float64(m)) *
+		math.Pow(1-x*x, float64(m)/2) *
+		math.Gamma(float64(m)+0.5) / math.SqrtPi
 
-	// P(|m|, |m|, x)
-	res := float64(sign) * math.Pow(1-x*x, float64(m)/2) * math.Gamma(float64(m)+0.5) / math.SqrtPi * float64(int(1<<uint(m)))
+	// Recurrence formula for P(n>m, m, x)
+	// P(k+1, m, x) = [(2*k+1)*x*P(k, m, x) - (k+m)*P(k-1, m, x)] / (k+1-m)
 	if n > m {
-		// Use recurrence formula to go from P(|m|, |m|, x) to P(n, |m|, x),
-		// using a special case to get P(|m|+1, |m|, x).
-		tmp := res
-		res = x * float64(2*m+1) * res
-		for k := m + 1; k < n; k++ {
-			res, tmp = (x*float64(2*k+1)*res-float64(k+m)*tmp)/float64(k-m+1), res
+		prev := 0. // P(m-1, m, x)
+		for k := m; k < n; k++ {
+			next := (float64(2*k+1)*x*res - float64(k+m)*prev) / float64(k+1-m)
+			res, prev = next, res
 		}
 	}
-	return negmfac * res
+
+	// Reflection formula
+	if reflect {
+		res *= sign * math.Gamma(float64(n-m+1)) / math.Gamma(float64(n+m+1))
+	}
+
+	return res
 }

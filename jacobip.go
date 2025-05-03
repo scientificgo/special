@@ -8,7 +8,7 @@ import "math"
 func JacobiP(n int, a, b, x float64) float64 {
 	s := 1
 	if x < 0 {
-		s = int(powN1(n))
+		s = powN1(n)
 		a, b = b, a
 		x = -x
 	}
