@@ -29,13 +29,18 @@ func LegendreAP(n, m int, x float64) float64 {
 		return 0
 	}
 
-	// Special base case P(m, m, x)
-	res := sign *
-		math.Pow(2, float64(m)) *
-		math.Pow(1-x*x, float64(m)/2) *
-		math.Gamma(float64(m)+0.5) / math.SqrtPi
+	if x < 0 {
+		x = -x
+		sign *= float64(powN1(n - m))
+	}
 
-	// Recurrence formula for P(n>m, m, x)
+	// Base case with n=m
+	// P(m, m, x) = (-1)^m * (2*m-1)!! * (1-x^2)^(m/2)
+	res := sign *
+		math.Pow(2, float64(m)) * math.Gamma(float64(m)+0.5) / math.SqrtPi * // (2*m-1)!!, see https://functions.wolfram.com/06.02.03.0005
+		math.Pow(1-x*x, float64(m)/2)
+
+	// Recurrence formula
 	// P(k+1, m, x) = [(2*k+1)*x*P(k, m, x) - (k+m)*P(k-1, m, x)] / (k+1-m)
 	if n > m {
 		prev := 0. // P(m-1, m, x)
@@ -46,6 +51,7 @@ func LegendreAP(n, m int, x float64) float64 {
 	}
 
 	// Reflection formula
+	// P(n, -m, x) = (-1)^m * (n-m)!/(n+m)! * P(n, m, x)
 	if reflect {
 		res *= sign * math.Gamma(float64(n-m+1)) / math.Gamma(float64(n+m+1))
 	}
